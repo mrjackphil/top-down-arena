@@ -66,7 +66,7 @@ func _update_body_direction(dir: Vector3) -> void:
 	var mouse_position = viewport.get_mouse_position()
 	var mouse_position_vect = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
 	
-	mech_body.rotation.y = -atan2(mouse_position_vect.x, mouse_position_vect.z)
+	mech_body.rotation.y = lerp_angle(-atan2(mouse_position_vect.x, mouse_position_vect.z), mech_body.rotation.y, 0.9)
 
 
 # Changes legs direction to dir vector.
