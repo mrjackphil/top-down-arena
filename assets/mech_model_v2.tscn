@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpc3q8555itv2"]
+
+[ext_resource type="PackedScene" uid="uid://c1opn0totyx8f" path="res://assets/mech_v2.glb" id="1_7141v"]
+
+[node name="mech_v2" instance=ExtResource("1_7141v")]
+
+[node name="body" parent="." index="0"]
+transform = Transform3D(0.999995, -0.00323618, 0.000599156, 0.00323643, 0.999995, -0.000404963, -0.000597846, 0.000406895, 1, 0, 2.8463, 0)

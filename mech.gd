@@ -4,7 +4,9 @@ extends CharacterBody3D
 const SPEED = 20.0
 const JUMP_VELOCITY = 4.5
 
-@onready var mech_model: Node3D = $mech
+@onready var mech_model: Node3D = $Model
+@onready var mech_body: Node3D = mech_model.find_child("body", false)
+@onready var mech_legs: Node3D = mech_model.find_child("legs", false)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -26,24 +28,39 @@ func _physics_process(delta):
 	
 	var combined_input_dir = input_dir + input_gameplay
 	var direction = (transform.basis * Vector3(combined_input_dir.x, 0, combined_input_dir.y)).normalized()
+	
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 		
-		if velocity.x > 0:
-			mech_model.rotation.y = lerp(mech_model.rotation.y, 0.1, 0.1)
-			
-		if velocity.x < 0:
-			mech_model.rotation.y = lerp(mech_model.rotation.y, 3.14, 0.1)
-			
-		if velocity.z < 0:
-			mech_model.rotation.y = lerp(mech_model.rotation.y, 1.57, 0.1)
-			
-		if velocity.z > 0:
-			mech_model.rotation.y = lerp(mech_model.rotation.y, -1.57, 0.1)
+		update_model_behavior(direction)
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+
+	
+func update_model_behavior(dir: Vector3):
+	if mech_model == null:
+		print("Mech model is not found")
+		breakpoint
+		return
+
+	if mech_body == null:
+		print("Mech body is not found")
+		return
+	
+	var viewport = get_viewport()
+	var mouse_position = viewport.get_mouse_position()
+	
+	var mouse_position_vect = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
+	
+	mech_body.rotation.y = -atan2(mouse_position_vect.x, mouse_position_vect.z)
+	mech_legs.rotation.y = lerp_angle(atan2(-dir.z, dir.x), mech_legs.rotation.y, 0.9)
+	# mech_model.transform.basis = mech_model.transform.basis * Basis(Vector3.ZERO, mouse_position_vect, Vector3.ZERO)
+	
+	# mech_model.rotate_object_local(Vector3(0, 1, 0), mouse_position_vect.x)
+	# mech_model.rotation.y = rotation.angle_to(dir)
