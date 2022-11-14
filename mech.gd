@@ -8,6 +8,7 @@ const JUMP_VELOCITY = 4.5
 @onready var mech_body: Node3D = mech_model.find_child("body", false)
 @onready var mech_legs: Node3D = mech_model.find_child("legs", false)
 
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -33,34 +34,46 @@ func _physics_process(delta):
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 		
-		update_model_behavior(direction)
+		_update_legs_direction(direction)
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+	_update_body_direction(direction)
 
 
-	
-func update_model_behavior(dir: Vector3):
+func _update_model_behavior(dir: Vector3):
 	if mech_model == null:
 		print("Mech model is not found")
 		breakpoint
 		return
+	
+	# mech_model.transform.basis = mech_model.transform.basis * Basis(Vector3.ZERO, mouse_position_vect, Vector3.ZERO)
+	
+	# mech_model.rotate_object_local(Vector3(0, 1, 0), mouse_position_vect.x)
+	# mech_model.rotation.y = rotation.angle_to(dir)
 
+
+# Changes body direction to dir vector.
+func _update_body_direction(dir: Vector3) -> void:
 	if mech_body == null:
 		print("Mech body is not found")
 		return
 	
 	var viewport = get_viewport()
 	var mouse_position = viewport.get_mouse_position()
-	
 	var mouse_position_vect = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
 	
-	mech_body.rotation.y = -atan2(mouse_position_vect.x, mouse_position_vect.z)
-	mech_legs.rotation.y = lerp_angle(atan2(-dir.z, dir.x), mech_legs.rotation.y, 0.9)
-	# mech_model.transform.basis = mech_model.transform.basis * Basis(Vector3.ZERO, mouse_position_vect, Vector3.ZERO)
+	mech_body.rotation.y = lerp_angle(-atan2(mouse_position_vect.x, mouse_position_vect.z), mech_body.rotation.y, 0.9)
+
+
+# Changes legs direction to dir vector.
+func _update_legs_direction(dir: Vector3) -> void:
+	if mech_legs == null:
+		print("Mech legs are not found")
+		return
 	
-	# mech_model.rotate_object_local(Vector3(0, 1, 0), mouse_position_vect.x)
-	# mech_model.rotation.y = rotation.angle_to(dir)
+	var viewport = get_viewport()
+	mech_legs.rotation.y = lerp_angle(atan2(-dir.z, dir.x), mech_legs.rotation.y, 0.9)
