@@ -4,9 +4,13 @@ extends CharacterBody3D
 const SPEED = 20.0
 const JUMP_VELOCITY = 4.5
 
+const CAMERA_DISTANCE = 5
+
 @onready var mech_model: Node3D = $Model
 @onready var mech_body: Node3D = mech_model.find_child("body", false)
 @onready var mech_legs: Node3D = mech_model.find_child("legs", false)
+
+@onready var camera_position: Node3D = $CameraRoot/CameraPosition
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -42,24 +46,14 @@ func _physics_process(delta):
 
 	move_and_slide()
 	_update_body_direction(direction)
-
-
-func _update_model_behavior(dir: Vector3):
-	if mech_model == null:
-		print("Mech model is not found")
-		breakpoint
-		return
-	
-	# mech_model.transform.basis = mech_model.transform.basis * Basis(Vector3.ZERO, mouse_position_vect, Vector3.ZERO)
-	
-	# mech_model.rotate_object_local(Vector3(0, 1, 0), mouse_position_vect.x)
-	# mech_model.rotation.y = rotation.angle_to(dir)
+	_update_camera_offset(direction)
 
 
 # Changes body direction to dir vector.
 func _update_body_direction(dir: Vector3) -> void:
 	if mech_body == null:
-		print("Mech body is not found")
+		print("Mech body is not found. Disabling ", name, " instance.")
+		set_physics_process(false)
 		return
 	
 	var viewport = get_viewport()
@@ -72,8 +66,25 @@ func _update_body_direction(dir: Vector3) -> void:
 # Changes legs direction to dir vector.
 func _update_legs_direction(dir: Vector3) -> void:
 	if mech_legs == null:
-		print("Mech legs are not found")
+		print("Mech legs are not found. Disabling ", name, " instance.")
+		set_physics_process(false)
 		return
 	
 	var viewport = get_viewport()
 	mech_legs.rotation.y = lerp_angle(atan2(-dir.z, dir.x), mech_legs.rotation.y, 0.9)
+
+# Move camera toward the mouse
+func _update_camera_offset(dir: Vector3) -> void:
+	if camera_position == null:
+		print("Camera not found.")
+		set_physics_process(false)
+		return
+	
+	var viewport = get_viewport()
+	var mouse_position = viewport.get_mouse_position()
+	var mouse_position_vect = Vector3(
+		mouse_position.x - viewport.size.x / 2,
+		0,
+		mouse_position.y - viewport.size.y / 2).normalized()
+		
+	camera_position.position = lerp(camera_position.position, mouse_position_vect * CAMERA_DISTANCE, 0.1)
