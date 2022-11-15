@@ -7,9 +7,15 @@ const JUMP_VELOCITY = 4.5
 const CAMERA_DISTANCE = 5
 
 @onready var mech_model: Node3D = $Model
-@onready var mech_body: Node3D = mech_model.find_child("body", false)
-@onready var mech_legs: Node3D = mech_model.find_child("legs", false)
+@onready var mech_body: Node3D = mech_model.get_node("body")
+@onready var mech_legs: Node3D = mech_model.get_node("legs")
 
+# Needs for shooting mechanic
+@onready var bullet_spawner_l: Node3D = mech_model.get_node("body/weapon_l/bullet_spawn_l")
+@onready var bullet_spawner_r: Node3D = mech_model.get_node("body/weapon_r/bullet_spawn_r")
+@onready var bullet_node = preload("res://assets/bullet.tscn")
+
+# Needs for dynamic camera
 @onready var camera_position: Node3D = $CameraRoot/CameraPosition
 
 
@@ -21,11 +27,12 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+		
 
 	# Handle Jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
+		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -47,6 +54,9 @@ func _physics_process(delta):
 	move_and_slide()
 	_update_body_direction(direction)
 	_update_camera_offset(direction)
+	
+	if Input.is_action_just_pressed("shoot"):
+		_spawn_bullet(direction)
 
 
 # Changes body direction to dir vector.
@@ -88,3 +98,17 @@ func _update_camera_offset(dir: Vector3) -> void:
 		mouse_position.y - viewport.size.y / 2).normalized()
 		
 	camera_position.position = lerp(camera_position.position, mouse_position_vect * CAMERA_DISTANCE, 0.1)
+
+func _spawn_bullet(dir: Vector3) -> void:
+	if bullet_spawner_l == null:
+		return
+		
+	var viewport = get_viewport()
+	var mouse_position = viewport.get_mouse_position()
+	var mouse_position_vect = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
+	
+	var bullet = bullet_node.instantiate()
+	get_node("/root/World").add_child(bullet)
+	bullet.position = bullet_spawner_l.global_position
+	bullet.rotation.y = -atan2(mouse_position_vect.x, mouse_position_vect.z) + PI / 2
+	
