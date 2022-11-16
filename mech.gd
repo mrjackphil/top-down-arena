@@ -17,9 +17,22 @@ const CAMERA_DISTANCE = 5
 
 # Needs for dynamic camera
 @onready var camera_position: Node3D = $CameraRoot/CameraPosition
+@onready var camera: Camera3D = $CameraRoot/CameraPosition/Camera
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+# Ray tracing needs
+# TODO: _ray_length should be exported
+var _ray_length: int = 1000
+var _ray_origin = Vector3()
+var _ray_mouse = Vector3()
+
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		_ray_origin = camera.project_ray_origin(event.position)
+		_ray_mouse = _ray_origin + camera.project_ray_normal(event.position) * _ray_length
 
 
 func _physics_process(delta):
@@ -65,15 +78,8 @@ func _update_body_direction() -> void:
 		set_physics_process(false)
 		return
 	
-	var camera = $CameraRoot/CameraPosition/Camera
-	
 	var space_state = get_world_3d().direct_space_state
-	
-	var ray_length = 2000
-	var mouse_pos = get_viewport().get_mouse_position()
-	var from = camera.project_ray_origin(mouse_pos)
-	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
-	var intersection = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from, to))
+	var intersection = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(_ray_origin, _ray_mouse))
 	
 	if not intersection.is_empty():
 		var pos = intersection.position
@@ -110,13 +116,24 @@ func _update_camera_offset(dir: Vector3) -> void:
 func _spawn_bullet(dir: Vector3) -> void:
 	if bullet_spawner_l == null:
 		return
-		
-	var viewport = get_viewport()
-	var mouse_position = viewport.get_mouse_position()
-	var mouse_position_vect = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
 	
 	var bullet = bullet_node.instantiate()
 	get_node("/root/World").add_child(bullet)
 	bullet.position = bullet_spawner_l.global_position
-	bullet.rotation.y = -atan2(mouse_position_vect.x, mouse_position_vect.z) + PI / 2
+	
+	var space_state = get_world_3d().direct_space_state
+	var intersection = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(_ray_origin, _ray_mouse))
+	
+	if intersection.is_empty() || intersection.collider == $"../CSGBox3D":
+		var viewport = get_viewport()
+		var mouse_position = viewport.get_mouse_position()
+		var mouse_position_vect = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
+		
+		bullet.rotation.y = -atan2(mouse_position_vect.x, mouse_position_vect.z) + PI / 2
+	else:
+		var pos = intersection.position
+#		var bullet_y = maxf(pos.y, bullet_spawner_l.position.y)
+		
+		bullet.look_at(Vector3(pos.x, pos.y, pos.z))
+		bullet.rotate_y(PI)
 	
