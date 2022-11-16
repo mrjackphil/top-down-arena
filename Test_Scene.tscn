@@ -38,7 +38,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.532248, 12.8851, 6.42041)
 [node name="CameraPosition" type="Node3D" parent="CharacterBody3D2/CameraRoot"]
 
 [node name="Camera" type="Camera3D" parent="CharacterBody3D2/CameraRoot/CameraPosition"]
-transform = Transform3D(1, 0, 0, 0, 0.48004, 0.877247, 0, -0.877247, 0.48004, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.480224, 0.877146, 0, -0.877146, 0.480224, 0, 0, 0)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(4.76884, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

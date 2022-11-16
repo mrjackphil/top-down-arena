@@ -18,7 +18,6 @@ const CAMERA_DISTANCE = 5
 # Needs for dynamic camera
 @onready var camera_position: Node3D = $CameraRoot/CameraPosition
 
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -52,7 +51,7 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-	_update_body_direction(direction)
+	_update_body_direction()
 	_update_camera_offset(direction)
 	
 	if Input.is_action_just_pressed("shoot"):
@@ -60,17 +59,26 @@ func _physics_process(delta):
 
 
 # Changes body direction to dir vector.
-func _update_body_direction(dir: Vector3) -> void:
+func _update_body_direction() -> void:
 	if mech_body == null:
 		print("Mech body is not found. Disabling ", name, " instance.")
 		set_physics_process(false)
 		return
 	
-	var viewport = get_viewport()
-	var mouse_position = viewport.get_mouse_position()
-	var mouse_position_vect = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
+	var camera = $CameraRoot/CameraPosition/Camera
 	
-	mech_body.rotation.y = lerp_angle(-atan2(mouse_position_vect.x, mouse_position_vect.z), mech_body.rotation.y, 0.9)
+	var space_state = get_world_3d().direct_space_state
+	
+	var ray_length = 2000
+	var mouse_pos = get_viewport().get_mouse_position()
+	var from = camera.project_ray_origin(mouse_pos)
+	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
+	var intersection = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from, to))
+	
+	if not intersection.is_empty():
+		var pos = intersection.position
+		mech_body.look_at(Vector3(pos.x, mech_body.position.y, pos.z))
+		mech_body.rotate_y(PI/2)
 
 
 # Changes legs direction to dir vector.
@@ -81,7 +89,7 @@ func _update_legs_direction(dir: Vector3) -> void:
 		return
 	
 	var viewport = get_viewport()
-	mech_legs.rotation.y = lerp_angle(atan2(-dir.z, dir.x), mech_legs.rotation.y, 0.9)
+	mech_legs.rotation.y = lerp_angle(atan2(-dir.x, -dir.z), mech_legs.rotation.y, 0.9)
 
 # Move camera toward the mouse
 func _update_camera_offset(dir: Vector3) -> void:
