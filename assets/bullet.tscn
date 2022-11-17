@@ -3,15 +3,18 @@
 [ext_resource type="PackedScene" uid="uid://fkptcbuecqnq" path="res://bullet_mesh.tscn" id="2_4vece"]
 [ext_resource type="Script" path="res://assets/bullet.gd" id="2_lqccc"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_dgk6m"]
-radius = 0.499126
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u2gnp"]
+radius = 0.110617
+height = 0.944207
 
 [node name="bullet" type="AnimatableBody3D"]
 sync_to_physics = false
 script = ExtResource("2_lqccc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_dgk6m")
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_u2gnp")
 disabled = true
 
 [node name="bullet" parent="." instance=ExtResource("2_4vece")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
