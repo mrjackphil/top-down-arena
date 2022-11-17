@@ -18,6 +18,7 @@ const CAMERA_DISTANCE = 5
 # Needs for dynamic camera
 @onready var camera_position: Node3D = $CameraRoot/CameraPosition
 
+@onready var bullet_spawner_to_shoot = bullet_spawner_l
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -100,7 +101,8 @@ func _update_camera_offset(dir: Vector3) -> void:
 	camera_position.position = lerp(camera_position.position, mouse_position_vect * CAMERA_DISTANCE, 0.1)
 
 func _spawn_bullet(dir: Vector3) -> void:
-	if bullet_spawner_l == null:
+	if bullet_spawner_l == null or bullet_spawner_r == null:
+		print_debug('Bullet spawners not found')
 		return
 		
 	var viewport = get_viewport()
@@ -109,6 +111,11 @@ func _spawn_bullet(dir: Vector3) -> void:
 	
 	var bullet = bullet_node.instantiate()
 	get_node("/root/World").add_child(bullet)
-	bullet.position = bullet_spawner_l.global_position
+	
+	bullet.position = bullet_spawner_to_shoot.global_position
 	bullet.rotation.y = -atan2(mouse_position_vect.x, mouse_position_vect.z) + PI / 2
 	
+	if bullet_spawner_to_shoot == bullet_spawner_l:
+		bullet_spawner_to_shoot = bullet_spawner_r
+	else: 
+		bullet_spawner_to_shoot = bullet_spawner_l
