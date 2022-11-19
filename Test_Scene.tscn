@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cawtlw0lqmqs6"]
+[gd_scene load_steps=8 format=3 uid="uid://cawtlw0lqmqs6"]
 
 [ext_resource type="PackedScene" uid="uid://bfq11qvhed0yu" path="res://assets/mech_model.tscn" id="1_bb6mf"]
 [ext_resource type="Script" path="res://mech.gd" id="1_nnsey"]
@@ -10,6 +10,9 @@ radius = 1.93681
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rfwpk"]
 albedo_texture = ExtResource("2_a6mcb")
+
+[sub_resource type="Environment" id="Environment_5eedn"]
+glow_enabled = true
 
 [node name="World" type="Node3D"]
 
@@ -47,6 +50,7 @@ use_collision = true
 size = Vector3(24.7599, 1, 111.882)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5eedn")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(-0.369304, 0.679382, 0.634078, 0.271425, -0.573705, 0.772781, 0.888787, 0.457496, 0.0274699, 0, 10.2591, 0)
