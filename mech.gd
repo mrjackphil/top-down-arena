@@ -7,6 +7,11 @@ const JUMP_VELOCITY = 4.5
 const CAMERA_DISTANCE = 5
 const RELOAD_MAX_TIME: int = 10
 
+# Max rotation rad for body.
+# TODO: move to export var list.
+# NOTE: should be in degrees and convert to rad on _init() function for visibility from editor.
+const MAX_BODY_ROTATION_RAD: float = deg_to_rad(20) 
+
 @onready var mech_model: Node3D = $Model
 @onready var mech_body: Node3D = mech_model.get_node("body")
 @onready var mech_legs: Node3D = mech_model.get_node("legs")
@@ -78,7 +83,18 @@ func _update_body_direction(dir: Vector3) -> void:
 	var mouse_position = viewport.get_mouse_position()
 	var mouse_position_vect = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
 	
-	mech_body.rotation.y = lerp_angle(-atan2(mouse_position_vect.x, mouse_position_vect.z), mech_body.rotation.y, 0.9)
+	var new_angle = -atan2(mouse_position_vect.x, mouse_position_vect.z)
+	var diff = _fmod(mech_body.rotation.y - new_angle + PI, TAU) - PI
+	if absf(diff) > MAX_BODY_ROTATION_RAD:
+		new_angle = mech_body.rotation.y - sign(diff) * MAX_BODY_ROTATION_RAD
+	
+	mech_body.rotation.y = lerp_angle(new_angle, mech_body.rotation.y, 0.9)
+
+
+# Custom fmod to get non negative modulo with negative lhs.
+# TODO: move to common script file. 
+func _fmod(lhs: float, rhs: float) -> float:
+	return lhs - floor(lhs / rhs) * rhs
 
 
 # Changes legs direction to dir vector.
