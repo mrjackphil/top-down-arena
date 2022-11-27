@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://m56d4h1cwycw"]
+
+[ext_resource type="PackedScene" uid="uid://dee7x2rlbq6mo" path="res://assets/mech_v3.glb" id="1_kn1hx"]
+
+[node name="mech_v3" instance=ExtResource("1_kn1hx")]
+
+[node name="bullet_spawn_l" type="Node3D" parent="body/weapon_l" index="0"]
+transform = Transform3D(1, -8.82181e-10, 2.32831e-10, 4.46505e-11, 1, 0, 0, 0, 1, 2.20086, -0.228936, 0)
+
+[node name="bullet_spawn_r" type="Node3D" parent="body/weapon_r" index="0"]
+transform = Transform3D(1, -1.8135e-09, 4.65661e-10, 4.46505e-11, 1, 0, 0, 0, 1, 1.50017, -0.201525, 0.0417595)
