@@ -144,6 +144,7 @@ func _update_legs_direction(dir: Vector3) -> void:
 	var viewport = get_viewport()
 	mech_legs.rotation.y = lerp_angle(atan2(-dir.z, dir.x), mech_legs.rotation.y, 0.9)
 
+
 # Move camera toward the mouse
 func _update_camera_offset(dir: Vector3) -> void:
 	if camera_position == null:
@@ -165,19 +166,16 @@ func _spawn_bullet(dir: Vector3) -> void:
 	if bullet_spawner_l == null or bullet_spawner_r == null:
 		print_debug('Bullet spawners not found')
 		return
-		
-	var viewport = get_viewport()
-	var mouse_position = viewport.get_mouse_position()
-	var mouse_position_vect = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
 	
 	var bullet = bullet_node.instantiate()
 	get_node("/root/World").add_child(bullet)
 	
 	bullet.position = bullet_spawner_to_shoot.global_position
-	bullet.rotation.y = -atan2(mouse_position_vect.x, mouse_position_vect.z) + PI / 2
 	reload_timer = RELOAD_MAX_TIME
 	
 	if bullet_spawner_to_shoot == bullet_spawner_l:
 		bullet_spawner_to_shoot = bullet_spawner_r
+		bullet.rotation.y = mech_weapon_left.global_rotation.y + PI / 2
 	else: 
 		bullet_spawner_to_shoot = bullet_spawner_l
+		bullet.rotation.y = mech_weapon_left.global_rotation.y + PI / 2
