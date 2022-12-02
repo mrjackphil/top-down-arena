@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://m56d4h1cwycw"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="PackedScene" uid="uid://dee7x2rlbq6mo" path="res://assets/mech_v3.glb" id="1_kn1hx"]
-[ext_resource type="Script" path="res://assets/mech.gd" id="2_c2lrq"]
+[ext_resource type="PackedScene" uid="uid://dee7x2rlbq6mo" path="res://assets/mech/mech_v3.glb" id="1_h7vm2"]
+[ext_resource type="Script" path="res://assets/mech/mech.gd" id="2_ftuo8"]
 
-[node name="mech_v3" instance=ExtResource("1_kn1hx")]
-script = ExtResource("2_c2lrq")
+[node name="mech_v3" instance=ExtResource("1_h7vm2")]
+script = ExtResource("2_ftuo8")
 
 [node name="bullet_spawn_l" type="Node3D" parent="body/weapon_l" index="0"]
 transform = Transform3D(1, -8.82181e-10, 2.32831e-10, 4.46505e-11, 1, 0, 0, 0, 1, 2.20086, -0.228936, 0)
