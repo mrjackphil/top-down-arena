@@ -1,4 +1,5 @@
 extends Node3D
+class_name Mech
 
 
 # Mech movement speed.
@@ -47,7 +48,7 @@ var _weapons_rotation_speed_rad: float = deg_to_rad(weapons_rotation_speed)
 @onready var _bullet_node = preload("res://assets/mech/bullet/bullet.tscn")
 
 # Current bullet spawner. Changes when a new bullet spawned.
-@onready var _bullet_spawner_to_shoot = _bullet_spawner_l
+@onready var _bullet_spawner_to_shoot: Node3D = _bullet_spawner_l
 
 
 # Changes body direction to dir vector.

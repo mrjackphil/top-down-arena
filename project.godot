@@ -8,6 +8,22 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "Node3D",
+"class": &"Mech",
+"language": &"GDScript",
+"path": "res://assets/mech/mech.gd"
+}, {
+"base": "CharacterBody3D",
+"class": &"Player",
+"language": &"GDScript",
+"path": "res://player.gd"
+}]
+_global_script_class_icons={
+"Mech": "",
+"Player": ""
+}
+
 [application]
 
 config/name="Top Down Arena"

@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 
 # Distance from camera from player to mouse.
@@ -6,7 +7,7 @@ extends CharacterBody3D
 
 # Needs for dynamic camera
 @onready var _camera_position: Node3D = $CameraRoot/CameraPosition
-@onready var _mech_model = get_node("Model")
+@onready var _mech_model: Mech = get_node("Model")
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var _gravity: Variant = ProjectSettings.get_setting("physics/3d/default_gravity")
