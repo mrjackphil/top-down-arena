@@ -44,7 +44,7 @@ var _weapons_rotation_speed_rad: float = deg_to_rad(weapons_rotation_speed)
 # Needs for shooting mechanic
 @onready var _bullet_spawner_l: Node3D = $body/weapon_l/bullet_spawn_l
 @onready var _bullet_spawner_r: Node3D = $body/weapon_r/bullet_spawn_r
-@onready var _bullet_node = preload("res://assets/bullet.tscn")
+@onready var _bullet_node = preload("res://assets/mech/bullet/bullet.tscn")
 
 # Current bullet spawner. Changes when a new bullet spawned.
 @onready var _bullet_spawner_to_shoot = _bullet_spawner_l

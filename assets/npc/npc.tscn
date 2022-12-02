@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://be2nuup11w1oc"]
+
+[ext_resource type="PackedScene" path="res://assets/mech/mech_model.tscn" id="1_y3vck"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
+radius = 1.93681
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_y3vck")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+visible = false
+shape = SubResource("SphereShape3D_mj3nk")
