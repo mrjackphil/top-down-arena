@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://7rml4ve7my61"
-path="res://.godot/imported/bullet.glb-776adc2d9ab759433c921bb182e6c7d6.scn"
+uid="uid://eaull517lqj7"
+path="res://.godot/imported/mech_v2.glb-38a2ba8757221729a00ece4d76f1ed86.scn"
 
 [deps]
 
-source_file="res://assets/bullet.glb"
-dest_files=["res://.godot/imported/bullet.glb-776adc2d9ab759433c921bb182e6c7d6.scn"]
+source_file="res://assets/mech/mech_v2.glb"
+dest_files=["res://.godot/imported/mech_v2.glb-38a2ba8757221729a00ece4d76f1ed86.scn"]
 
 [params]
 

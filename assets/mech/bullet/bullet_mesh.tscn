@@ -1,13 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://fkptcbuecqnq"]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="PackedScene" uid="uid://7rml4ve7my61" path="res://assets/bullet.glb" id="1_18f5o"]
-[ext_resource type="Shader" path="res://bullet_mesh.gdshader" id="2_a4tqh"]
+[ext_resource type="PackedScene" uid="uid://7rml4ve7my61" path="res://assets/mech/bullet/bullet.glb" id="1_x3oiu"]
+[ext_resource type="Shader" path="res://assets/mech/bullet/bullet_mesh.gdshader" id="2_qwlyt"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gre2p"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hjmqn"]
 render_priority = 0
-shader = ExtResource("2_a4tqh")
+shader = ExtResource("2_qwlyt")
 shader_parameter/Glow_Power = 10.0
 shader_parameter/Lightness_Difference = 10.0
 shader_parameter/Sun_Color = Color(0.968627, 0.87451, 0.537255, 1)
@@ -46,7 +46,7 @@ _surfaces = [{
 }]
 shadow_mesh = SubResource("ArrayMesh_7i40r")
 
-[node name="bullet" instance=ExtResource("1_18f5o")]
+[node name="bullet" instance=ExtResource("1_x3oiu")]
 
 [node name="Icosphere" parent="." index="0"]
 mesh = SubResource("ArrayMesh_ipjj4")
