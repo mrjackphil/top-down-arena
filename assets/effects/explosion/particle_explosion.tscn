@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgcd51drgrpnn"]
+
+[sub_resource type="Gradient" id="Gradient_mydev"]
+offsets = PackedFloat32Array(0, 0.511029, 0.996324)
+colors = PackedColorArray(0.941176, 0.658824, 0, 1, 0.815686, 0.392157, 0.0588235, 1, 0.521569, 0.290196, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_721ti"]
+gradient = SubResource("Gradient_mydev")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cspfw"]
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+direction = Vector3(1, 1, 1)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+scale_min = 0.1
+color_ramp = SubResource("GradientTexture1D_721ti")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jvsjj"]
+transparency = 1
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_refhv"]
+material = SubResource("StandardMaterial3D_jvsjj")
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="particle_explosion" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0188453, -9.53674e-07, 0.00554562)
+emitting = false
+amount = 50
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_cspfw")
+draw_pass_1 = SubResource("BoxMesh_refhv")
