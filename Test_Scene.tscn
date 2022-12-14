@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://d03d6mcidcepc"]
 
-[ext_resource type="PackedScene" uid="uid://be2nuup11w1oc" path="res://assets/npc/npc.tscn" id="1_kaobf"]
+[ext_resource type="PackedScene" uid="uid://dfxa24h3i6fgi" path="res://assets/npc/npc.tscn" id="1_kaobf"]
 [ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="2_a6mcb"]
 [ext_resource type="PackedScene" uid="uid://ca7tcyr2wfnbc" path="res://assets/player/player.tscn" id="2_fsfd4"]
 
@@ -15,7 +15,7 @@ glow_enabled = true
 [node name="Enemy" parent="." instance=ExtResource("1_kaobf")]
 
 [node name="Player" parent="." instance=ExtResource("2_fsfd4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.608, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.642, 0, 0.514)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(4.76884, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

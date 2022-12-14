@@ -15,13 +15,25 @@ _global_script_classes=[{
 "path": "res://assets/mech/mech.gd"
 }, {
 "base": "CharacterBody3D",
+"class": &"NPC",
+"language": &"GDScript",
+"path": "res://assets/npc/npc.gd"
+}, {
+"base": "CharacterBody3D",
 "class": &"Player",
 "language": &"GDScript",
 "path": "res://player.gd"
+}, {
+"base": "Node3D",
+"class": &"StateMachine",
+"language": &"GDScript",
+"path": "res://assets/npc/state_machine.gd"
 }]
 _global_script_class_icons={
 "Mech": "",
-"Player": ""
+"NPC": "",
+"Player": "",
+"StateMachine": ""
 }
 
 [application]
@@ -30,6 +42,10 @@ config/name="Top Down Arena"
 run/main_scene="res://Test_Scene.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GLOBALS="*res://assets/common/globals.gd"
 
 [importer_defaults]
 

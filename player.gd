@@ -2,18 +2,30 @@ extends CharacterBody3D
 class_name Player
 
 
+const GLOBALS = preload("res://assets/common/globals.gd")
+
+
 # Distance from camera from player to mouse.
 @export var camera_distance = 5
 
 # Needs for dynamic camera
 @onready var _camera_position: Node3D = $CameraRoot/CameraPosition
-@onready var _mech_model: Mech = get_node("Model")
+@onready var _mech_model: Mech = $Model
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var _gravity: Variant = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 
-func _physics_process(delta):
+func _init() -> void:
+	# Can be done via editor. But with changes, you can forget about it.
+	add_to_group(GLOBALS.ALLY_GROUP)
+
+
+func _ready() -> void:
+	_mech_model.set_color(Color(0, 0, 1))
+
+
+func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= _gravity * delta

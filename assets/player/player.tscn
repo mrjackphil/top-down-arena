@@ -22,4 +22,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.532248, 12.8851, 6.42041)
 [node name="CameraPosition" type="Node3D" parent="CameraRoot"]
 
 [node name="Camera" type="Camera3D" parent="CameraRoot/CameraPosition"]
-transform = Transform3D(1, 0, 0, 0, 0.48004, 0.877247, 0, -0.877247, 0.48004, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.48004, 0.877247, 0, -0.877247, 0.48004, 0, 4.77425, 3.59114)

@@ -37,7 +37,7 @@ var _weapons_rotation_speed_rad: float = deg_to_rad(weapons_rotation_speed)
 
 
 # Model parts for faster loading.
-@onready var _mech_body: Node3D = $body
+@onready var _mech_body: MeshInstance3D = $body
 @onready var _mech_legs: Node3D = $legs
 @onready var _mech_weapon_left: Node3D = $body/weapon_l
 @onready var _mech_weapon_right: Node3D = $body/weapon_r
@@ -49,6 +49,18 @@ var _weapons_rotation_speed_rad: float = deg_to_rad(weapons_rotation_speed)
 
 # Current bullet spawner. Changes when a new bullet spawned.
 @onready var _bullet_spawner_to_shoot: Node3D = _bullet_spawner_l
+
+@onready var _reload_timer: Timer = $reload_timer
+
+
+# Sets mech color.
+func set_color(color: Color) -> void:
+	var material = _mech_body.get_active_material(0).duplicate()
+	material.albedo_color = color
+	_mech_body.set_surface_override_material(0, material)
+	_mech_legs.set_surface_override_material(0, material)
+	_mech_weapon_left.set_surface_override_material(0, material)
+	_mech_weapon_right.set_surface_override_material(0, material)
 
 
 # Changes body direction to dir vector.
@@ -81,12 +93,12 @@ func update_weapons_direction(dir: Vector3) -> void:
 	var left_weapon_new_angle = -atan2(dir.x, dir.z)
 	var left_weapon_diff = _fmod(_mech_weapon_left.global_rotation.y - left_weapon_new_angle + PI, TAU) - PI
 	if absf(left_weapon_diff) > _weapons_rotation_speed_rad:
-		left_weapon_new_angle = _mech_body.rotation.y - sign(left_weapon_diff) * _weapons_rotation_speed_rad
+		left_weapon_new_angle = _mech_body.global_rotation.y - sign(left_weapon_diff) * _weapons_rotation_speed_rad
 	
 	var right_weapon_new_angle = -atan2(dir.x, dir.z)
 	var right_weapon_diff = _fmod(_mech_weapon_right.global_rotation.y - right_weapon_new_angle + PI, TAU) - PI
 	if absf(right_weapon_diff) > _weapons_rotation_speed_rad:
-		right_weapon_new_angle = _mech_body.rotation.y - sign(right_weapon_diff) * _weapons_rotation_speed_rad
+		right_weapon_new_angle = _mech_body.global_rotation.y - sign(right_weapon_diff) * _weapons_rotation_speed_rad
 	
 	_mech_weapon_left.global_rotation.y = lerp_angle(left_weapon_new_angle, _mech_weapon_left.global_rotation.y, 0.9)
 	_mech_weapon_right.global_rotation.y = lerp_angle(right_weapon_new_angle, _mech_weapon_right.global_rotation.y, 0.9)
@@ -99,7 +111,6 @@ func update_legs_direction(dir: Vector3) -> void:
 		set_physics_process(false)
 		return
 	
-	var viewport = get_viewport()
 	_mech_legs.rotation.y = lerp_angle(atan2(-dir.z, dir.x), _mech_legs.rotation.y, 0.9)
 
 
@@ -117,7 +128,7 @@ func spawn_bullet() -> void:
 	get_node("/root/World").add_child(bullet)
 	
 	bullet.position = _bullet_spawner_to_shoot.global_position
-	$reload_timer.start(reload_time_sec)
+	_reload_timer.start(reload_time_sec)
 	
 	if _bullet_spawner_to_shoot == _bullet_spawner_l:
 		_bullet_spawner_to_shoot = _bullet_spawner_r
@@ -134,5 +145,5 @@ func _fmod(lhs: float, rhs: float) -> float:
 
 
 # Reload weapons by timer.
-func _on_reload_timer_timeout():
+func _on_reload_timer_timeout() -> void:
 	reloaded = true

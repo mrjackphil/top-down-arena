@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://ctc6dg682i5qh"]
 
 [ext_resource type="PackedScene" uid="uid://dgnq0b8pay8g6" path="res://assets/mech/mech.glb" id="1_b341a"]
 [ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="2_vrqit"]
