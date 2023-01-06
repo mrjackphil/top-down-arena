@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8jjl2qnb5bn2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gttt4"]
+bg_color = Color(0.815686, 0.152941, 0.282353, 1)
+
+[sub_resource type="Theme" id="Theme_r2nvc"]
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_gttt4")
+
+[node name="ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 274.0
+offset_bottom = 27.0
+theme = SubResource("Theme_r2nvc")
+value = 100.0
+rounded = true
+show_percentage = false

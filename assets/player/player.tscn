@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ca7tcyr2wfnbc"]
+[gd_scene load_steps=5 format=3 uid="uid://ca7tcyr2wfnbc"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_rf361"]
+[ext_resource type="PackedScene" uid="uid://b8jjl2qnb5bn2" path="res://assets/ui/ui_player.tscn" id="2_c7mvq"]
 [ext_resource type="PackedScene" uid="uid://bvm4twi02rja5" path="res://assets/mech/mech_model_v3.tscn" id="2_exeov"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
@@ -9,6 +10,10 @@ radius = 1.93681
 [node name="CharacterBody3D" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60824, 0, 0)
 script = ExtResource("1_rf361")
+
+[node name="ui" parent="." instance=ExtResource("2_c7mvq")]
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
