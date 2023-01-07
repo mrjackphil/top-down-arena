@@ -19,12 +19,7 @@ func _physics_process(delta):
 
 	timer -= 1
 
-
 func _on_body_entered(body) -> void:
-	if (body && body.has_method("queue_free")):
-		particle_explosion.position = position
-		particle_explosion.emitting = true
-		get_tree().root.add_child(particle_explosion)
-		body.queue_free()
+	if (body && body.has_method("on_hurt")):
+		body.on_hurt()
 		queue_free()
-		
