@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://cvu7kqcqoupa6"]
 
 [ext_resource type="PackedScene" uid="uid://7rml4ve7my61" path="res://assets/mech/bullet/bullet.glb" id="1_x3oiu"]
 [ext_resource type="Shader" path="res://assets/mech/bullet/bullet_mesh.gdshader" id="2_qwlyt"]
