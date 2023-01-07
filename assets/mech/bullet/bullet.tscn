@@ -1,20 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://bsnx3642camwl"]
 
-[ext_resource type="PackedScene" path="res://assets/mech/bullet/bullet_mesh.tscn" id="2_4vece"]
+[ext_resource type="PackedScene" uid="uid://cvu7kqcqoupa6" path="res://assets/mech/bullet/bullet_mesh.tscn" id="2_4vece"]
 [ext_resource type="Script" path="res://assets/mech/bullet/bullet.gd" id="2_lqccc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u2gnp"]
 radius = 0.110617
 height = 0.944207
 
-[node name="bullet" type="AnimatableBody3D"]
-sync_to_physics = false
+[node name="bullet" type="Area3D"]
 script = ExtResource("2_lqccc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_u2gnp")
-disabled = true
 
 [node name="bullet" parent="." instance=ExtResource("2_4vece")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

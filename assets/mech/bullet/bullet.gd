@@ -1,7 +1,9 @@
-extends Node3D
+extends Area3D
 
 const DESTROY_TIMER = 30
 var timer = DESTROY_TIMER
+
+@onready var particle_explosion: GPUParticles3D = preload("res://assets/effects/explosion/particle_explosion.tscn").instantiate()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
