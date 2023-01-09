@@ -31,6 +31,10 @@ run/main_scene="res://Test_Scene.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MapGenerator="*res://map_generator.gd"
+
 [importer_defaults]
 
 scene={

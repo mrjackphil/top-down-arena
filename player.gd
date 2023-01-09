@@ -42,7 +42,6 @@ func _physics_process(delta):
 	
 	var viewport = get_viewport()
 	var mouse_position = viewport.get_mouse_position()
-	
 	var body_direction = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
 	var camera_direction = Vector3(mouse_position.x - viewport.size.x / 2, 0, mouse_position.y - viewport.size.y / 2).normalized()
 	

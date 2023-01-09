@@ -21,6 +21,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("SphereShape3D_mj3nk")
 
 [node name="healthbar" type="Sprite3D" parent="."]
+layers = 2
 modulate = Color(1, 0, 0, 1)
 pixel_size = 0.0291
 billboard = 1

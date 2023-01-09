@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ca7tcyr2wfnbc"]
+[gd_scene load_steps=6 format=3 uid="uid://ca7tcyr2wfnbc"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_rf361"]
 [ext_resource type="PackedScene" uid="uid://b8jjl2qnb5bn2" path="res://assets/ui/ui_player.tscn" id="2_c7mvq"]
 [ext_resource type="PackedScene" uid="uid://bvm4twi02rja5" path="res://assets/mech/mech_model_v3.tscn" id="2_exeov"]
+[ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="4_euio8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
 radius = 1.93681
@@ -12,8 +13,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60824, 0, 0)
 script = ExtResource("1_rf361")
 
 [node name="ui" parent="." instance=ExtResource("2_c7mvq")]
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -28,3 +27,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.532248, 12.8851, 6.42041)
 
 [node name="Camera" type="Camera3D" parent="CameraRoot/CameraPosition"]
 transform = Transform3D(1, 0, 0, 0, 0.48004, 0.877247, 0, -0.877247, 0.48004, 0, 0, 0)
+cull_mask = 1048571
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.0859966, 0.000669247, 0.000379981, -0.000380402, 5.26309e-05, 0.0859991, 0.000669007, -0.0859974, 5.55886e-05, 0, 5.85473, 0)
+layers = 4
+billboard = 1
+no_depth_test = true
+fixed_size = true
+texture = ExtResource("4_euio8")
