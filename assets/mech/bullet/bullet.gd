@@ -22,4 +22,5 @@ func _physics_process(delta):
 func _on_body_entered(body) -> void:
 	if (body && body.has_method("on_hurt")):
 		body.on_hurt()
-		queue_free()
+	
+	queue_free()
