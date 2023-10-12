@@ -1,8 +1,7 @@
 extends Node
 
-@export @onready var cell: PackedScene = preload("res://assets/map/plane.tscn")
-
-var root_node = get_node("/root")
+@onready var cell: PackedScene = preload("res://assets/map/plane.tscn")
+@onready var root_node = get_node("/root")
 
 # Map -> Cell -> Tile
 

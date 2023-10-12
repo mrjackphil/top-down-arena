@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://j2b5nriw4nls"]
 
-[ext_resource type="Texture2D" uid="uid://dvixgxckt7rue" path="res://floor.png" id="2_hfqn6"]
+[ext_resource type="Shader" path="res://blockout_shader.gdshader" id="1_4bmi7"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jthxv"]
-albedo_texture = ExtResource("2_hfqn6")
-uv1_scale = Vector3(0.1, 0.1, 0.1)
-uv1_triplanar = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kx53y"]
+render_priority = 0
+shader = ExtResource("1_4bmi7")
+shader_parameter/color = Color(1, 1, 1, 1)
 
 [node name="Plane" type="CSGBox3D"]
 use_collision = true
 size = Vector3(20, 1, 20)
-material = SubResource("StandardMaterial3D_jthxv")
+material = SubResource("ShaderMaterial_kx53y")
