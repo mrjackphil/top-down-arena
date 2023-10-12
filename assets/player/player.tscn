@@ -1,24 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://ca7tcyr2wfnbc"]
+[gd_scene load_steps=7 format=3 uid="uid://ca7tcyr2wfnbc"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_rf361"]
 [ext_resource type="PackedScene" uid="uid://b8jjl2qnb5bn2" path="res://assets/ui/ui_player.tscn" id="2_c7mvq"]
-[ext_resource type="PackedScene" uid="uid://bvm4twi02rja5" path="res://assets/mech/mech_model_v3.tscn" id="2_exeov"]
 [ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="4_euio8"]
+[ext_resource type="PackedScene" uid="uid://d0g8tp0rvaspf" path="res://mech_rigged_legs.tscn" id="5_4mlh3"]
+[ext_resource type="Script" path="res://assets/mech/mech.gd" id="6_7hciu"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
 radius = 1.93681
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("_mech_model")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60824, 0, 0)
 script = ExtResource("1_rf361")
+_mech_model = NodePath("mech_rigged_legs")
 
 [node name="ui" parent="." instance=ExtResource("2_c7mvq")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("SphereShape3D_mj3nk")
-
-[node name="Model" parent="." instance=ExtResource("2_exeov")]
 
 [node name="CameraRoot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.532248, 12.8851, 6.42041)
@@ -36,3 +36,37 @@ billboard = 1
 no_depth_test = true
 fixed_size = true
 texture = ExtResource("4_euio8")
+
+[node name="mech_rigged_legs" parent="." node_paths=PackedStringArray("_mech_weapon_left", "_mech_weapon_right", "_bullet_spawner_l", "_bullet_spawner_r", "_bullet_spawner_to_shoot") instance=ExtResource("5_4mlh3")]
+script = ExtResource("6_7hciu")
+mech_speed = 10.0
+_mech_weapon_left = NodePath("body/weapon_l")
+_mech_weapon_right = NodePath("body/weapon_r")
+_bullet_spawner_l = NodePath("body/weapon_l/bullet_spawn_l")
+_bullet_spawner_r = NodePath("body/weapon_r/bullet_spawn_r")
+_bullet_spawner_to_shoot = NodePath("body/weapon_l/bullet_spawn_l")
+
+[node name="Armature" parent="mech_rigged_legs/body" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.546298, 0)
+
+[node name="RLegFoot" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="0"]
+transform = Transform3D(0.113427, 0.0245063, 0.00022184, -0.0245063, 0.113428, -2.36858e-05, 0.000221839, 2.36966e-05, -0.116045, 2.53597, -0.528884, 1.0074)
+
+[node name="RLegLeg" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="1"]
+transform = Transform3D(0.069818, -0.0926917, 0.000193412, 0.0926919, 0.0698179, -0.000155048, -7.47976e-06, -0.000247774, -0.116044, 1.72473, -0.341274, 1.00319)
+
+[node name="RLegHip" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="2"]
+transform = Transform3D(-0.042415, -0.108015, 0.000147757, 0.108015, -0.0424153, -0.000365125, -0.000393867, -4.07706e-06, -0.116044, -0.028303, 0.0540679, 0.998181)
+
+[node name="LLegFoot" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="4"]
+transform = Transform3D(0.116045, 0, 0, 0, 0.116045, 0, 0, 0, 0.116045, 2.51719, -0.574137, -1.01393)
+
+[node name="LLegLeg" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="5"]
+transform = Transform3D(0.0708272, -0.0919217, 0.000542031, 0.0919233, 0.0708258, -0.000439368, 1.72146e-05, 0.000697529, 0.116043, 1.70969, -0.367696, -1.0087)
+
+[node name="LLegHip" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="6"]
+transform = Transform3D(-0.0412568, -0.108462, 0.000408283, 0.108458, -0.0412589, -0.0010247, 0.00110291, 1.72947e-05, 0.11604, -0.0268984, 0.0406399, -0.997396)
+
+[connection signal="timeout" from="mech_rigged_legs/reload_timer" to="mech_rigged_legs" method="_on_reload_timer_timeout"]
+
+[editable path="mech_rigged_legs"]

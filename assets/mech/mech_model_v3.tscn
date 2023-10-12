@@ -12,6 +12,9 @@ transform = Transform3D(1, -8.82181e-10, 2.32831e-10, 4.46505e-11, 1, 0, 0, 0, 1
 [node name="bullet_spawn_r" type="Node3D" parent="body/weapon_r" index="0"]
 transform = Transform3D(1, -1.8135e-09, 4.65661e-10, 4.46505e-11, 1, 0, 0, 0, 1, 1.50017, -0.201525, 0.0417595)
 
+[node name="legs" parent="." index="1"]
+visible = false
+
 [node name="reload_timer" type="Timer" parent="." index="2"]
 one_shot = true
 

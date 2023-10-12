@@ -37,19 +37,40 @@ var _weapons_rotation_speed_rad: float = deg_to_rad(weapons_rotation_speed)
 
 
 # Model parts for faster loading.
-@onready var _mech_body: Node3D = $body
-@onready var _mech_legs: Node3D = $legs
-@onready var _mech_weapon_left: Node3D = $body/weapon_l
-@onready var _mech_weapon_right: Node3D = $body/weapon_r
+@export var _mech_body: Node3D
+@export var _mech_legs: Node3D
+@export var _mech_weapon_left: Node3D
+@export var _mech_weapon_right: Node3D
 
 # Needs for shooting mechanic
-@onready var _bullet_spawner_l: Node3D = $body/weapon_l/bullet_spawn_l
-@onready var _bullet_spawner_r: Node3D = $body/weapon_r/bullet_spawn_r
-@onready var _bullet_node = preload("res://assets/mech/bullet/bullet.tscn")
+@export var _bullet_spawner_l: Node3D
+@export var _bullet_spawner_r: Node3D
+@export var _bullet_node = preload("res://assets/mech/bullet/bullet.tscn")
 
 # Current bullet spawner. Changes when a new bullet spawned.
-@onready var _bullet_spawner_to_shoot: Node3D = _bullet_spawner_l
+@export var _bullet_spawner_to_shoot: Node3D
 
+func _ready():
+	if !_mech_body:
+		_mech_body = $body
+
+	if !_mech_legs:
+		_mech_legs = $legs
+
+	if !_mech_weapon_left:
+		_mech_weapon_left = $body/weapon_l
+		
+	if !_mech_weapon_right:
+		_mech_weapon_right = $body/weapon_r
+
+	if !_bullet_spawner_l:
+		_bullet_spawner_l = $body/weapon_l/bullet_spawn_l
+		
+	if !_bullet_spawner_r:
+		_bullet_spawner_r = $body/weapon_r/bullet_spawn_r
+		
+	if !_bullet_spawner_to_shoot:
+		_bullet_spawner_to_shoot = _bullet_spawner_l
 
 # Changes body direction to dir vector.
 func update_body_direction(dir: Vector3) -> void:

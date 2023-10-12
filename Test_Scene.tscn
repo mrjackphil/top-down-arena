@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cx01pe06df2px"]
+[gd_scene load_steps=6 format=3 uid="uid://cx01pe06df2px"]
 
 [ext_resource type="PackedScene" uid="uid://be2nuup11w1oc" path="res://assets/npc/npc.tscn" id="1_kaobf"]
 [ext_resource type="PackedScene" uid="uid://ca7tcyr2wfnbc" path="res://assets/player/player.tscn" id="2_fsfd4"]
 [ext_resource type="Script" path="res://assets/npc/enemy.gd" id="2_vk2re"]
+[ext_resource type="PackedScene" uid="uid://d0g8tp0rvaspf" path="res://mech_rigged_legs.tscn" id="4_qo6aq"]
 
 [sub_resource type="Environment" id="Environment_5eedn"]
 glow_enabled = true
@@ -22,3 +23,6 @@ environment = SubResource("Environment_5eedn")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(-0.369304, 0.679382, 0.634078, 0.271425, -0.573705, 0.772781, 0.888787, 0.457496, 0.0274699, 0, 10.2591, 0)
 shadow_enabled = true
+
+[node name="mech_rigged_legs" parent="." instance=ExtResource("4_qo6aq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.2349, 0.523322, -0.0289184)

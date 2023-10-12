@@ -7,10 +7,14 @@ class_name Player
 
 # Needs for dynamic camera
 @onready var _camera_position: Node3D = $CameraRoot/CameraPosition
-@onready var _mech_model: Mech = get_node("Model")
+@export var _mech_model: Mech
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var _gravity: Variant = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+func _ready():
+	if !_mech_model:
+		_mech_model = $Model
 
 
 func _physics_process(delta):
