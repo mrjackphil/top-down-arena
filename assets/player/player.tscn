@@ -10,10 +10,11 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
 radius = 1.93681
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("_mech_model")]
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("_mech_model", "_legs_model")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60824, 0, 0)
 script = ExtResource("1_rf361")
 _mech_model = NodePath("mech_rigged_legs")
+_legs_model = NodePath("legs")
 
 [node name="ui" parent="." instance=ExtResource("2_c7mvq")]
 

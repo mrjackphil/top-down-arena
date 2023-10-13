@@ -8,6 +8,7 @@ class_name Player
 # Needs for dynamic camera
 @onready var _camera_position: Node3D = $CameraRoot/CameraPosition
 @export var _mech_model: Mech
+@export var _legs_model: Node3D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var _gravity: Variant = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -38,7 +39,7 @@ func _physics_process(delta):
 		velocity.x = direction.x * _mech_model.mech_speed
 		velocity.z = direction.z * _mech_model.mech_speed
 		
-		_mech_model.update_legs_direction(direction)
+		_legs_model.rotation.y = lerp_angle(atan2(-direction.z, direction.x), _legs_model.rotation.y, 0.9)
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, _mech_model.mech_speed)

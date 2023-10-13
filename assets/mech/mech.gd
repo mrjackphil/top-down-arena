@@ -113,17 +113,6 @@ func update_weapons_direction(dir: Vector3) -> void:
 	_mech_weapon_right.global_rotation.y = lerp_angle(right_weapon_new_angle, _mech_weapon_right.global_rotation.y, 0.9)
 
 
-# Changes legs direction to dir vector.
-func update_legs_direction(dir: Vector3) -> void:
-	if _mech_legs == null:
-		print("Mech legs are not found. Disabling ", name, " instance.")
-		set_physics_process(false)
-		return
-	
-	var viewport = get_viewport()
-	_mech_legs.rotation.y = lerp_angle(atan2(-dir.z, dir.x), _mech_legs.rotation.y, 0.9)
-
-
 # Spawns bullet and fires it to weapons direction.
 func spawn_bullet() -> void:
 	if !reloaded:

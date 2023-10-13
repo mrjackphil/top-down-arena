@@ -55,7 +55,7 @@ target_node = NodePath("../../RIKTarget")
 script = ExtResource("2_330ar")
 
 [node name="StepTargetContainer" type="Node3D" parent="Armature" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
 
 [node name="RaycastLeft" type="RayCast3D" parent="Armature/StepTargetContainer" index="0" node_paths=PackedStringArray("step_target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0800693, 0.846298, -2.04135)
