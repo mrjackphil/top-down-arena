@@ -7,16 +7,19 @@
 
 [node name="mech_rigged_legs" instance=ExtResource("1_inmet")]
 
+[node name="Armature" parent="body" index="0"]
+visible = false
+
 [node name="RLegFoot" parent="body/Armature/Skeleton3D" index="0"]
-transform = Transform3D(0.115427, -0.0106362, 0.00545329, 0.0106362, 0.115556, 0.000250582, 0.00545329, -0.000250578, -0.115916, -0.00235684, -2.18629, 1.00224)
+transform = Transform3D(0.116045, -3.4584e-08, 2.62797e-09, 2.76672e-08, 0.116045, 1.05982e-08, 3.4113e-09, 5.95147e-09, -0.116045, 0.0770282, -2.17975, 1.00244)
 bone_idx = 6
 
 [node name="RLegLeg" parent="body/Armature/Skeleton3D" index="1"]
-transform = Transform3D(0.115927, 0.00522367, -0.000124184, -0.00522335, 0.115926, 0.000285828, -0.000136947, 0.000279995, -0.116025, -0.332769, -1.50184, 0.998114)
+transform = Transform3D(0.116045, 9.26081e-17, 6.83419e-09, -7.45058e-09, 0.116045, 9.23279e-09, 7.61752e-09, 4.58609e-09, -0.116045, -0.287538, -1.50057, 0.999862)
 bone_idx = 7
 
 [node name="RLegHip" parent="body/Armature/Skeleton3D" index="2"]
-transform = Transform3D(0.116022, 0.00232027, -4.2298e-06, -0.00232027, 0.116022, -6.22079e-06, -4.10457e-06, -6.30412e-06, -0.116045, 0.060797, 0.00536787, 0.998385)
+transform = Transform3D(0.116045, -7.45058e-09, 9.65004e-09, -4.77439e-15, 0.116045, 8.31873e-09, 1.04334e-08, 3.67202e-09, -0.116045, 0.0606776, 0.0065825, 0.998387)
 bone_idx = 8
 
 [node name="RLegConnect" parent="body/Armature/Skeleton3D" index="3"]
@@ -24,15 +27,15 @@ transform = Transform3D(0.116045, 0, 0, 0, 0.116045, 0, 0, 0, -0.116045, 0.06415
 bone_idx = 9
 
 [node name="LLegFoot" parent="body/Armature/Skeleton3D" index="4"]
-transform = Transform3D(0.116045, 0, 0, 0, 0.116045, 0, 0, 0, 0.116045, 0.167885, -2.22812, -1.05371)
+transform = Transform3D(0.116045, -7.06045e-09, 1.36083e-08, 1.57139e-08, 0.116045, 1.86265e-08, -9.03506e-09, -1.11759e-08, 0.116045, 0.0639204, -2.17564, -1.0019)
 bone_idx = 15
 
 [node name="LLegLeg" parent="body/Armature/Skeleton3D" index="5"]
-transform = Transform3D(0.115913, -0.00495905, 0.00122114, 0.00498449, 0.115892, -0.00250333, -0.00111271, 0.00255335, 0.115992, -0.224391, -1.51487, -1.01687)
+transform = Transform3D(0.116045, 2.79397e-09, 0, 2.04891e-08, 0.116045, 1.86265e-08, 1.11759e-08, -1.86265e-08, 0.116045, -0.300645, -1.49646, -0.999324)
 bone_idx = 16
 
 [node name="LLegHip" parent="body/Armature/Skeleton3D" index="6"]
-transform = Transform3D(0.115864, -0.00646809, -8.82521e-05, 0.00646797, 0.115864, -0.000140702, 9.59486e-05, 0.000135567, 0.116045, 0.0468992, 0.0133241, -0.997798)
+transform = Transform3D(0.116045, 1.11759e-08, -7.45058e-09, 9.31323e-09, 0.116045, 2.42144e-08, 1.49012e-08, -1.86265e-08, 0.116045, 0.0475708, 0.0106919, -0.997849)
 bone_idx = 17
 
 [node name="LLegConnect" parent="body/Armature/Skeleton3D" index="7"]

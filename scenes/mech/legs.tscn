@@ -1,0 +1,89 @@
+[gd_scene load_steps=5 format=3 uid="uid://cw0g6oqxn7baa"]
+
+[ext_resource type="PackedScene" uid="uid://daa7ap7phip7r" path="res://assets/models/legs.glb" id="1_stnby"]
+[ext_resource type="Script" path="res://ik_start.gd" id="2_330ar"]
+[ext_resource type="Script" path="res://step_ray.gd" id="3_rskrt"]
+[ext_resource type="Script" path="res://ik_target.gd" id="4_v4x56"]
+
+[node name="legs" instance=ExtResource("1_stnby")]
+
+[node name="RLegFoot" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(0.116045, -3.4584e-08, 2.62797e-09, 2.76672e-08, 0.116045, 1.05982e-08, 3.4113e-09, 5.95147e-09, -0.116045, 0.0770282, -2.17975, 1.00244)
+bone_idx = 6
+
+[node name="RLegLeg" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(0.116045, 9.26081e-17, 6.83419e-09, -7.45058e-09, 0.116045, 9.23279e-09, 7.61752e-09, 4.58609e-09, -0.116045, -0.287538, -1.50057, 0.999862)
+bone_idx = 7
+
+[node name="RLegHip" parent="Armature/Skeleton3D" index="2"]
+transform = Transform3D(0.116045, -7.45058e-09, 9.65004e-09, -4.77439e-15, 0.116045, 8.31873e-09, 1.04334e-08, 3.67202e-09, -0.116045, 0.0606776, 0.0065825, 0.998387)
+bone_idx = 8
+
+[node name="RLegConnect" parent="Armature/Skeleton3D" index="3"]
+transform = Transform3D(0.116045, 0, 0, 0, 0.116045, 0, 0, 0, -0.116045, 0.0641504, 0.00585628, 0.574686)
+bone_idx = 9
+
+[node name="LLegFoot" parent="Armature/Skeleton3D" index="4"]
+transform = Transform3D(0.116045, -7.06045e-09, 1.36083e-08, 1.57139e-08, 0.116045, 1.86265e-08, -9.03506e-09, -1.11759e-08, 0.116045, 0.0639204, -2.17564, -1.0019)
+bone_idx = 15
+
+[node name="LLegLeg" parent="Armature/Skeleton3D" index="5"]
+transform = Transform3D(0.116045, 2.79397e-09, 0, 2.04891e-08, 0.116045, 1.86265e-08, 1.11759e-08, -1.86265e-08, 0.116045, -0.300645, -1.49646, -0.999324)
+bone_idx = 16
+
+[node name="LLegHip" parent="Armature/Skeleton3D" index="6"]
+transform = Transform3D(0.116045, 1.11759e-08, -7.45058e-09, 9.31323e-09, 0.116045, 2.42144e-08, 1.49012e-08, -1.86265e-08, 0.116045, 0.0475708, 0.0106919, -0.997849)
+bone_idx = 17
+
+[node name="LLegConnect" parent="Armature/Skeleton3D" index="7"]
+transform = Transform3D(0.116045, -2.32831e-10, 9.09162e-13, -2.32831e-10, 0.116045, 1.5099e-14, 9.09162e-13, 1.5099e-14, 0.116045, 0.051043, 0.00996536, -0.574149)
+bone_idx = 18
+
+[node name="LIKRig" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="9"]
+process_priority = 1
+root_bone = &"LHip"
+tip_bone = &"LLegFoot"
+target_node = NodePath("../../LIKTarget")
+script = ExtResource("2_330ar")
+
+[node name="RIKRIig" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="10"]
+process_priority = 1
+root_bone = &"RHip"
+tip_bone = &"RTip"
+override_tip_basis = false
+target_node = NodePath("../../RIKTarget")
+script = ExtResource("2_330ar")
+
+[node name="StepTargetContainer" type="Node3D" parent="Armature" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="RaycastLeft" type="RayCast3D" parent="Armature/StepTargetContainer" index="0" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0800693, 0.846298, -2.04135)
+target_position = Vector3(0, -10, 0)
+script = ExtResource("3_rskrt")
+step_target = NodePath("LIKStepTarget")
+
+[node name="LIKStepTarget" type="Marker3D" parent="Armature/StepTargetContainer/RaycastLeft" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.72848e-12, 0)
+
+[node name="RaycastRight" type="RayCast3D" parent="Armature/StepTargetContainer" index="1" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, -10, 0)
+script = ExtResource("3_rskrt")
+step_target = NodePath("RIKStepTarget")
+
+[node name="RIKStepTarget" type="Marker3D" parent="Armature/StepTargetContainer/RaycastRight" index="0"]
+
+[node name="LIKTarget" type="Marker3D" parent="Armature" index="2" node_paths=PackedStringArray("step_target", "adjacent_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.069242, 0.0713654, -1.05411)
+top_level = true
+script = ExtResource("4_v4x56")
+step_target = NodePath("../StepTargetContainer/RaycastLeft/LIKStepTarget")
+adjacent_target = NodePath("../RIKTarget")
+
+[node name="RIKTarget" type="Marker3D" parent="Armature" index="3" node_paths=PackedStringArray("step_target", "adjacent_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31798, 0.132107, 1.01961)
+top_level = true
+script = ExtResource("4_v4x56")
+step_target = NodePath("../StepTargetContainer/RaycastRight/RIKStepTarget")
+adjacent_target = NodePath("../LIKTarget")
