@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cw0g6oqxn7baa"]
 
-[ext_resource type="PackedScene" uid="uid://daa7ap7phip7r" path="res://assets/models/legs.glb" id="1_stnby"]
+[ext_resource type="PackedScene" uid="uid://daa7ap7phip7r" path="res://assets/mech/models/legs.glb" id="1_stnby"]
 [ext_resource type="Script" path="res://ik_start.gd" id="2_330ar"]
 [ext_resource type="Script" path="res://step_ray.gd" id="3_rskrt"]
 [ext_resource type="Script" path="res://ik_target.gd" id="4_v4x56"]

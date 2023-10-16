@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://j2b5nriw4nls"]
 
-[ext_resource type="Shader" path="res://blockout_shader.gdshader" id="1_4bmi7"]
+[ext_resource type="Shader" path="res://assets/map/shaders/blockout_shader.gdshader" id="1_4bmi7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kx53y"]
 render_priority = 0

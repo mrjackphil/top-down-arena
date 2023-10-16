@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://daa7ap7phip7r"
-path="res://.godot/imported/legs.glb-b5d384cc8e679ccdc91a97c286e18836.scn"
+uid="uid://dee7x2rlbq6mo"
+path="res://.godot/imported/mech_v3.glb-62f4785f4f5811d5482835ad7e60bc9e.scn"
 
 [deps]
 
-source_file="res://assets/models/legs.glb"
-dest_files=["res://.godot/imported/legs.glb-b5d384cc8e679ccdc91a97c286e18836.scn"]
+source_file="res://assets/mech/models/mech_v3.glb"
+dest_files=["res://.godot/imported/mech_v3.glb-62f4785f4f5811d5482835ad7e60bc9e.scn"]
 
 [params]
 

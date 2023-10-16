@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dgnq0b8pay8g6"
-path="res://.godot/imported/mech.glb-4a9181d6937661a4e99d3fd89fcf4f91.scn"
+uid="uid://eaull517lqj7"
+path="res://.godot/imported/mech_v2.glb-e390621bfb02ae07722851a9defa74ab.scn"
 
 [deps]
 
-source_file="res://assets/mech/mech.glb"
-dest_files=["res://.godot/imported/mech.glb-4a9181d6937661a4e99d3fd89fcf4f91.scn"]
+source_file="res://assets/mech/models/mech_v2.glb"
+dest_files=["res://.godot/imported/mech_v2.glb-e390621bfb02ae07722851a9defa74ab.scn"]
 
 [params]
 
@@ -25,5 +25,8 @@ meshes/lightmap_texel_size=0.2
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={}
+gltf/embedded_image_handling=1

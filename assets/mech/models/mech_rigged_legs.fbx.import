@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cn1rkitaponcj"
-path="res://.godot/imported/mech_rigged_legs.fbx-c7fb2c31e22e933affd8e3585e836845.scn"
+path="res://.godot/imported/mech_rigged_legs.fbx-7be8b789bba3e48a33c3cf05bdae9967.scn"
 
 [deps]
 
-source_file="res://assets/mech/mech_rigged_legs.fbx"
-dest_files=["res://.godot/imported/mech_rigged_legs.fbx-c7fb2c31e22e933affd8e3585e836845.scn"]
+source_file="res://assets/mech/models/mech_rigged_legs.fbx"
+dest_files=["res://.godot/imported/mech_rigged_legs.fbx-7be8b789bba3e48a33c3cf05bdae9967.scn"]
 
 [params]
 

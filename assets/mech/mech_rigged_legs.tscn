@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://d0g8tp0rvaspf"]
 
-[ext_resource type="PackedScene" uid="uid://gsmvjjbsn1yr" path="res://assets/mech/mech_rigged_legs.glb" id="1_inmet"]
-[ext_resource type="Script" path="res://ik_start.gd" id="2_m4tv5"]
-[ext_resource type="Script" path="res://step_ray.gd" id="3_708y2"]
-[ext_resource type="Script" path="res://ik_target.gd" id="3_fargv"]
+[ext_resource type="PackedScene" uid="uid://gsmvjjbsn1yr" path="res://assets/mech/models/mech_rigged_legs.glb" id="1_inmet"]
+[ext_resource type="Script" path="res://assets/mech/ik_start.gd" id="2_m4tv5"]
+[ext_resource type="Script" path="res://assets/mech/step_ray.gd" id="3_708y2"]
+[ext_resource type="Script" path="res://assets/mech/ik_target.gd" id="3_fargv"]
 
 [node name="mech_rigged_legs" instance=ExtResource("1_inmet")]
 

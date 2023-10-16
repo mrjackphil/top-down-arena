@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://ca7tcyr2wfnbc"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_rf361"]
+[ext_resource type="Script" path="res://assets/player/player.gd" id="1_rf361"]
 [ext_resource type="PackedScene" uid="uid://b8jjl2qnb5bn2" path="res://assets/ui/ui_player.tscn" id="2_c7mvq"]
 [ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="4_euio8"]
-[ext_resource type="PackedScene" uid="uid://d0g8tp0rvaspf" path="res://mech_rigged_legs.tscn" id="5_4mlh3"]
+[ext_resource type="PackedScene" uid="uid://d0g8tp0rvaspf" path="res://assets/mech/mech_rigged_legs.tscn" id="5_4mlh3"]
 [ext_resource type="Script" path="res://assets/mech/mech.gd" id="6_7hciu"]
-[ext_resource type="PackedScene" uid="uid://cw0g6oqxn7baa" path="res://scenes/mech/legs.tscn" id="6_knpsn"]
+[ext_resource type="PackedScene" uid="uid://cw0g6oqxn7baa" path="res://assets/mech/legs.tscn" id="6_knpsn"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
 radius = 1.93681
