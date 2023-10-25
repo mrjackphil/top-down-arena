@@ -21,7 +21,8 @@ func _ready():
 		printerr("Movement component works only with CharacterBody3D")
 
 func _jump():
-	_character_body.velocity.y = jump_velocity
+	if _character_body.is_on_floor():
+		_character_body.velocity.y = jump_velocity
 
 func _physics_process(delta):
 	if not _character_body:
