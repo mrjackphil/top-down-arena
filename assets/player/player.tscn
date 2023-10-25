@@ -14,7 +14,6 @@ radius = 0.878632
 height = 4.93799
 
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.35309, 0.313896, 0)
 
 [node name="MechConstructor" parent="." instance=ExtResource("1_odonj")]
 weapons = Array[PackedScene]([ExtResource("3_idmka"), ExtResource("4_ste2j"), ExtResource("4_ste2j"), ExtResource("4_ste2j")])

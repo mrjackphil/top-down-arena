@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://assets/mech/mech_constructor.gd" id="1_a2dlr"]
 [ext_resource type="PackedScene" uid="uid://281jm7t7qcsy" path="res://assets/mech/bases/4-weapon-base.tscn" id="2_1p1us"]
 [ext_resource type="PackedScene" uid="uid://db7u5ws0asu74" path="res://assets/mech/weapons/rocket.tscn" id="2_52gt6"]
-[ext_resource type="PackedScene" uid="uid://cw0g6oqxn7baa" path="res://assets/mech/legs.tscn" id="3_drm3j"]
+[ext_resource type="PackedScene" uid="uid://cw0g6oqxn7baa" path="res://assets/mech/ik/legs.tscn" id="3_drm3j"]
 [ext_resource type="PackedScene" uid="uid://dov4e8rgbsxfn" path="res://assets/mech/weapons/machine_gun.tscn" id="3_x1doq"]
 [ext_resource type="PackedScene" uid="uid://bd158utqssm8o" path="res://assets/mech/bases/2-weapon-base.tscn" id="4_3dmk7"]
 
