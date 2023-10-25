@@ -1,12 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://cx01pe06df2px"]
+[gd_scene load_steps=16 format=3 uid="uid://cx01pe06df2px"]
 
 [ext_resource type="PackedScene" uid="uid://be2nuup11w1oc" path="res://assets/npc/npc.tscn" id="1_kaobf"]
 [ext_resource type="PackedScene" uid="uid://ca7tcyr2wfnbc" path="res://assets/player/player.tscn" id="2_fsfd4"]
 [ext_resource type="Script" path="res://assets/npc/enemy.gd" id="2_vk2re"]
-[ext_resource type="PackedScene" uid="uid://d0g8tp0rvaspf" path="res://mech_rigged_legs.tscn" id="4_qo6aq"]
+[ext_resource type="PackedScene" uid="uid://d0g8tp0rvaspf" path="res://assets/mech/mech_rigged_legs.tscn" id="4_qo6aq"]
+[ext_resource type="PackedScene" uid="uid://gnhl5ph4405a" path="res://assets/mech/mech_constructor.tscn" id="5_254xg"]
+[ext_resource type="Script" path="res://assets/mech/components/movement_component.gd" id="6_5l6c8"]
+[ext_resource type="PackedScene" uid="uid://281jm7t7qcsy" path="res://assets/mech/bases/4-weapon-base.tscn" id="6_odwdd"]
+[ext_resource type="PackedScene" uid="uid://dov4e8rgbsxfn" path="res://assets/mech/weapons/machine_gun.tscn" id="6_sl1jj"]
+[ext_resource type="PackedScene" uid="uid://db7u5ws0asu74" path="res://assets/mech/weapons/rocket.tscn" id="7_dcy65"]
+[ext_resource type="Script" path="res://assets/mech/components/user_input_component.gd" id="7_pxnrr"]
+[ext_resource type="PackedScene" uid="uid://diy22r35a670q" path="res://assets/ui/game_camera.tscn" id="8_kmo8b"]
+[ext_resource type="Script" path="res://assets/mech/components/mech_rotation_component.gd" id="11_x1mod"]
+[ext_resource type="Script" path="res://assets/mech/components/mech_shoot_component.gd" id="12_pm05a"]
 
 [sub_resource type="Environment" id="Environment_5eedn"]
 glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ujx3"]
+radius = 0.878632
+height = 4.93799
 
 [node name="World" type="Node3D"]
 
@@ -26,3 +39,35 @@ shadow_enabled = true
 
 [node name="mech_rigged_legs" parent="." instance=ExtResource("4_qo6aq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.2349, 0.523322, -0.0289184)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.35309, 0.313896, 0)
+
+[node name="MechConstructor" parent="CharacterBody3D" instance=ExtResource("5_254xg")]
+base = ExtResource("6_odwdd")
+weapons = Array[PackedScene]([ExtResource("6_sl1jj"), ExtResource("7_dcy65"), ExtResource("7_dcy65"), ExtResource("7_dcy65")])
+
+[node name="UserInputComponent" type="Node" parent="CharacterBody3D"]
+script = ExtResource("7_pxnrr")
+
+[node name="MovementComponent" type="Node" parent="CharacterBody3D" node_paths=PackedStringArray("_character_body", "_input_component")]
+script = ExtResource("6_5l6c8")
+_character_body = NodePath("..")
+_input_component = NodePath("../UserInputComponent")
+
+[node name="MechRotationComponent" type="Node" parent="CharacterBody3D" node_paths=PackedStringArray("_input_component", "_mech_constructor")]
+script = ExtResource("11_x1mod")
+_input_component = NodePath("../UserInputComponent")
+_mech_constructor = NodePath("../MechConstructor")
+
+[node name="ShootComponent" type="Node" parent="CharacterBody3D" node_paths=PackedStringArray("_input_component", "_mech_constructor")]
+script = ExtResource("12_pm05a")
+_input_component = NodePath("../UserInputComponent")
+_mech_constructor = NodePath("../MechConstructor")
+reload_time_sec = 0.01
+
+[node name="CameraRoot2" parent="CharacterBody3D" instance=ExtResource("8_kmo8b")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.47685, 0)
+shape = SubResource("CapsuleShape3D_5ujx3")

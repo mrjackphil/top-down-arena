@@ -1,35 +1,103 @@
-[gd_scene load_steps=8 format=3 uid="uid://ca7tcyr2wfnbc"]
+[gd_scene load_steps=9 format=3 uid="uid://ca7tcyr2wfnbc"]
 
 [ext_resource type="Script" path="res://assets/player/player.gd" id="1_rf361"]
-[ext_resource type="PackedScene" uid="uid://b8jjl2qnb5bn2" path="res://assets/ui/ui_player.tscn" id="2_c7mvq"]
 [ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="4_euio8"]
 [ext_resource type="PackedScene" uid="uid://d0g8tp0rvaspf" path="res://assets/mech/mech_rigged_legs.tscn" id="5_4mlh3"]
-[ext_resource type="Script" path="res://assets/mech/mech.gd" id="6_7hciu"]
 [ext_resource type="PackedScene" uid="uid://cw0g6oqxn7baa" path="res://assets/mech/legs.tscn" id="6_knpsn"]
+[ext_resource type="Script" path="res://assets/mech/components/movement_component.gd" id="7_biqow"]
+[ext_resource type="Script" path="res://assets/mech/components/user_input_component.gd" id="8_1plms"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
 radius = 1.93681
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("_mech_model", "_legs_model")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60824, 0, 0)
-script = ExtResource("1_rf361")
-_mech_model = NodePath("mech_rigged_legs")
-_legs_model = NodePath("legs")
+[sub_resource type="GDScript" id="GDScript_ldbog"]
+script/source = "extends Node3D
+class_name Mech
 
-[node name="ui" parent="." instance=ExtResource("2_c7mvq")]
+# Weapons reload time in seconds.
+@export_range(0.01, 5) var reload_time_sec: float = 0.2
+
+# Is mech ready to fire.
+var reloaded: bool = true
+
+# Model parts for faster loading.
+@export var _mech_body: Node3D
+@export var _mech_legs: Node3D
+@export var _mech_weapon_left: Node3D
+@export var _mech_weapon_right: Node3D
+
+# Needs for shooting mechanic
+@export var _bullet_spawner_l: Node3D
+@export var _bullet_spawner_r: Node3D
+@export var _bullet_node = preload(\"res://assets/mech/bullet/bullet.tscn\")
+
+# Current bullet spawner. Changes when a new bullet spawned.
+@export var _bullet_spawner_to_shoot: Node3D
+
+func _ready():
+	if !_mech_body:
+		_mech_body = $body
+
+	if !_mech_legs:
+		_mech_legs = $legs
+
+	if !_mech_weapon_left:
+		_mech_weapon_left = $body/weapon_l
+		
+	if !_mech_weapon_right:
+		_mech_weapon_right = $body/weapon_r
+
+	if !_bullet_spawner_l:
+		_bullet_spawner_l = $body/weapon_l/bullet_spawn_l
+		
+	if !_bullet_spawner_r:
+		_bullet_spawner_r = $body/weapon_r/bullet_spawn_r
+		
+	if !_bullet_spawner_to_shoot:
+		_bullet_spawner_to_shoot = _bullet_spawner_l
+
+# Spawns bullet and fires it to weapons direction.
+func spawn_bullet() -> void:
+	if !reloaded:
+		return
+	
+	reloaded = false
+	if _bullet_spawner_l == null or _bullet_spawner_r == null:
+		print_debug('Bullet spawners not found')
+		return
+	
+	var bullet = _bullet_node.instantiate()
+	get_node(\"/root/World\").add_child(bullet)
+	
+	bullet.position = _bullet_spawner_to_shoot.global_position
+	$reload_timer.start(reload_time_sec)
+	
+	if _bullet_spawner_to_shoot == _bullet_spawner_l:
+		_bullet_spawner_to_shoot = _bullet_spawner_r
+		bullet.rotation.y = _mech_weapon_left.global_rotation.y + PI / 2
+	else: 
+		_bullet_spawner_to_shoot = _bullet_spawner_l
+		bullet.rotation.y = _mech_weapon_left.global_rotation.y + PI / 2
+
+
+# Custom fmod to get non negative modulo with negative lhs.
+# TODO: move to common script file. 
+func _fmod(lhs: float, rhs: float) -> float:
+	return lhs - floor(lhs / rhs) * rhs
+
+
+# Reload weapons by timer.
+func _on_reload_timer_timeout():
+	reloaded = true
+"
+
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("_legs_model")]
+script = ExtResource("1_rf361")
+_legs_model = NodePath("legs")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("SphereShape3D_mj3nk")
-
-[node name="CameraRoot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.532248, 12.8851, 6.42041)
-
-[node name="CameraPosition" type="Node3D" parent="CameraRoot"]
-
-[node name="Camera" type="Camera3D" parent="CameraRoot/CameraPosition"]
-transform = Transform3D(1, 0, 0, 0, 0.48004, 0.877247, 0, -0.877247, 0.48004, 0, 0, 0)
-cull_mask = 1048571
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.0859966, 0.000669247, 0.000379981, -0.000380402, 5.26309e-05, 0.0859991, 0.000669007, -0.0859974, 5.55886e-05, 0, 5.85473, 0)
@@ -40,8 +108,7 @@ fixed_size = true
 texture = ExtResource("4_euio8")
 
 [node name="mech_rigged_legs" parent="." node_paths=PackedStringArray("_mech_weapon_left", "_mech_weapon_right", "_bullet_spawner_l", "_bullet_spawner_r", "_bullet_spawner_to_shoot") instance=ExtResource("5_4mlh3")]
-script = ExtResource("6_7hciu")
-mech_speed = 10.0
+script = SubResource("GDScript_ldbog")
 _mech_weapon_left = NodePath("body/weapon_l")
 _mech_weapon_right = NodePath("body/weapon_r")
 _bullet_spawner_l = NodePath("body/weapon_l/bullet_spawn_l")
@@ -52,30 +119,39 @@ _bullet_spawner_to_shoot = NodePath("body/weapon_l/bullet_spawn_l")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.546298, 0)
 
 [node name="RLegFoot" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="0"]
-transform = Transform3D(0.113427, 0.0245063, 0.00022184, -0.0245063, 0.113428, -2.36858e-05, 0.000221839, 2.36966e-05, -0.116045, 2.53597, -0.528884, 1.0074)
+transform = Transform3D(0.115427, -0.0106363, 0.00545329, 0.0106363, 0.115556, 0.000250586, 0.00545329, -0.00025058, -0.115916, -0.00235654, -2.18629, 1.00224)
 
 [node name="RLegLeg" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="1"]
-transform = Transform3D(0.0698181, -0.0926918, 0.000193412, 0.092692, 0.0698179, -0.000155047, -7.47973e-06, -0.000247774, -0.116044, 1.72474, -0.341274, 1.00319)
+transform = Transform3D(0.115927, 0.00522338, -0.000124217, -0.00522307, 0.115927, 0.000285904, -0.000136961, 0.000280025, -0.116043, -0.332767, -1.50184, 0.998114)
 
 [node name="RLegHip" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="2"]
-transform = Transform3D(-0.042415, -0.108015, 0.000147757, 0.108015, -0.0424153, -0.000365125, -0.000393867, -4.07706e-06, -0.116044, -0.028303, 0.0540679, 0.998181)
+transform = Transform3D(0.116022, 0.0023206, -4.23045e-06, -0.0023206, 0.116022, -6.22173e-06, -4.10519e-06, -6.30508e-06, -0.116045, 0.0607971, 0.00536769, 0.998385)
 
 [node name="RLegConnect" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="3"]
 transform = Transform3D(0.116045, 0, 0, 0, 0.116045, 0, 0, 0, -0.116045, 0.0641504, 0.00585628, 0.574686)
 
 [node name="LLegFoot" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="4"]
-transform = Transform3D(0.116045, 0, 0, 0, 0.116045, 0, 0, 0, 0.116045, 2.51719, -0.574137, -1.01393)
+transform = Transform3D(0.116045, 0, 0, 0, 0.116045, 0, 0, 0, 0.116045, 0.167885, -2.22812, -1.05372)
 
 [node name="LLegLeg" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="5"]
-transform = Transform3D(0.0708272, -0.0919217, 0.000542091, 0.0919233, 0.0708258, -0.000439394, 1.72108e-05, 0.0006976, 0.116043, 1.70969, -0.367696, -1.0087)
+transform = Transform3D(0.115932, -0.00495963, 0.00122139, 0.00498508, 0.115911, -0.00250384, -0.00111295, 0.00255388, 0.116011, -0.224339, -1.51497, -1.01687)
 
 [node name="LLegHip" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="6"]
-transform = Transform3D(-0.0412568, -0.108462, 0.000408319, 0.108458, -0.0412588, -0.00102483, 0.00110304, 1.72686e-05, 0.11604, -0.0268984, 0.04064, -0.997396)
+transform = Transform3D(0.115864, -0.00646796, -8.82484e-05, 0.00646785, 0.115864, -0.00014071, 9.59523e-05, 0.00013558, 0.116045, 0.0468993, 0.0133241, -0.997798)
 
 [node name="LLegConnect" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="7"]
 transform = Transform3D(0.116045, -2.32831e-10, 9.09162e-13, -2.32831e-10, 0.116045, 1.5099e-14, 9.09162e-13, 1.5099e-14, 0.116045, 0.051043, 0.00996536, -0.574149)
 
 [node name="legs" parent="." instance=ExtResource("6_knpsn")]
+
+[node name="MovementComponent" type="Node" parent="." node_paths=PackedStringArray("_character_body", "_input_component")]
+script = ExtResource("7_biqow")
+_character_body = NodePath("..")
+_input_component = NodePath("../UserInputComponent")
+mech_speed = 5.0
+
+[node name="UserInputComponent" type="Node" parent="."]
+script = ExtResource("8_1plms")
 
 [connection signal="timeout" from="mech_rigged_legs/reload_timer" to="mech_rigged_legs" method="_on_reload_timer_timeout"]
 

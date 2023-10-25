@@ -12,7 +12,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	translate(Vector3(0, 0, 1))
+	translate(Vector3(1, 0, 0))
 	
 	if timer < 0:
 		queue_free()

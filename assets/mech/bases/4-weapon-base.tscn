@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://281jm7t7qcsy"]
+
+[ext_resource type="Script" path="res://assets/mech/bases/base.gd" id="1_oh5cy"]
+[ext_resource type="PackedScene" uid="uid://bbwnjj2j3ph73" path="res://assets/mech/models/middle_root.glb" id="2_w24qr"]
+[ext_resource type="Script" path="res://assets/mech/weapon_placement.gd" id="3_s6hhl"]
+
+[node name="Base" type="Node3D" node_paths=PackedStringArray("weapon_placements")]
+script = ExtResource("1_oh5cy")
+weapon_placements = [NodePath("Model/WeaponPlacement"), NodePath("Model/WeaponPlacement2"), NodePath("Model/WeaponPlacement3"), NodePath("Model/WeaponPlacement4")]
+
+[node name="Model" parent="." instance=ExtResource("2_w24qr")]
+
+[node name="WeaponPlacement" type="Node3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06953, 1.08361)
+script = ExtResource("3_s6hhl")
+
+[node name="WeaponPlacement2" type="Node3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09545, -1.23481)
+script = ExtResource("3_s6hhl")
+
+[node name="WeaponPlacement3" type="Node3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.09545, -1.23481)
+script = ExtResource("3_s6hhl")
+
+[node name="WeaponPlacement4" type="Node3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.06953, 1.08361)
+script = ExtResource("3_s6hhl")

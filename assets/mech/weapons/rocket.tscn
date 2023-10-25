@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://db7u5ws0asu74"]
+
+[ext_resource type="Script" path="res://assets/mech/weapon.gd" id="1_1hb4w"]
+[ext_resource type="PackedScene" uid="uid://bt7dgp38f2fe0" path="res://assets/mech/models/arm_power.glb" id="2_cig68"]
+[ext_resource type="PackedScene" uid="uid://bsnx3642camwl" path="res://assets/mech/bullet/bullet.tscn" id="2_surnw"]
+
+[node name="Weapon" type="Node3D" node_paths=PackedStringArray("bullet_hole")]
+script = ExtResource("1_1hb4w")
+bullet_hole = NodePath("Marker3D")
+bullet = ExtResource("2_surnw")
+
+[node name="arm_power" parent="." instance=ExtResource("2_cig68")]
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.40428, -0.243983, -0.00972164)

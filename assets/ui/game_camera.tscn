@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://diy22r35a670q"]
+
+[ext_resource type="PackedScene" uid="uid://b8jjl2qnb5bn2" path="res://assets/ui/gui.tscn" id="1_lyitn"]
+[ext_resource type="Script" path="res://assets/ui/game_camera.gd" id="1_ntafj"]
+
+[node name="CameraRoot" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.885, 6.42)
+script = ExtResource("1_ntafj")
+
+[node name="CameraPosition" type="Node3D" parent="."]
+
+[node name="Camera" type="Camera3D" parent="CameraPosition"]
+transform = Transform3D(1, 0, 0, 0, 0.48004, 0.877247, 0, -0.877247, 0.48004, 0, 0, 0)
+cull_mask = 1048571
+
+[node name="ui" parent="." instance=ExtResource("1_lyitn")]

@@ -1,0 +1,18 @@
+[gd_scene load_steps=6 format=3 uid="uid://gnhl5ph4405a"]
+
+[ext_resource type="Script" path="res://assets/mech/mech_constructor.gd" id="1_a2dlr"]
+[ext_resource type="PackedScene" uid="uid://db7u5ws0asu74" path="res://assets/mech/weapons/rocket.tscn" id="2_52gt6"]
+[ext_resource type="PackedScene" uid="uid://cw0g6oqxn7baa" path="res://assets/mech/legs.tscn" id="3_drm3j"]
+[ext_resource type="PackedScene" uid="uid://dov4e8rgbsxfn" path="res://assets/mech/weapons/machine_gun.tscn" id="3_x1doq"]
+[ext_resource type="PackedScene" uid="uid://bd158utqssm8o" path="res://assets/mech/bases/2-weapon-base.tscn" id="4_3dmk7"]
+
+[node name="MechConstructor" type="Node3D" node_paths=PackedStringArray("legs")]
+script = ExtResource("1_a2dlr")
+base = null
+weapons = Array[PackedScene]([ExtResource("2_52gt6"), ExtResource("3_x1doq")])
+legs = NodePath("Legs")
+
+[node name="Base" parent="." instance=ExtResource("4_3dmk7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.84811, 0)
+
+[node name="Legs" parent="." instance=ExtResource("3_drm3j")]

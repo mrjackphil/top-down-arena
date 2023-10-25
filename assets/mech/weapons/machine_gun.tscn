@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dov4e8rgbsxfn"]
+
+[ext_resource type="Script" path="res://assets/mech/weapon.gd" id="1_kqur7"]
+[ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="2_6jdvt"]
+[ext_resource type="PackedScene" uid="uid://bsnx3642camwl" path="res://assets/mech/bullet/bullet.tscn" id="2_awq7a"]
+[ext_resource type="PackedScene" uid="uid://bt7dgp38f2fe0" path="res://assets/mech/models/arm_power.glb" id="2_lnka1"]
+
+[node name="Weapon" type="Node3D" node_paths=PackedStringArray("bullet_hole")]
+script = ExtResource("1_kqur7")
+bullet_hole = NodePath("Marker3D")
+bullet = ExtResource("2_awq7a")
+
+[node name="arm_power2" parent="." instance=ExtResource("2_lnka1")]
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(-1.77247e-08, 0, 0.405494, 0, 1, 0, -0.405494, 0, -1.77247e-08, 0.550583, -0.600311, 0.00946525)
+texture_albedo = ExtResource("2_6jdvt")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.32383, -0.233031, 0)
