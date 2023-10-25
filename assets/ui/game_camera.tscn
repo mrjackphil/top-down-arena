@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b8jjl2qnb5bn2" path="res://assets/ui/gui.tscn" id="1_lyitn"]
 [ext_resource type="Script" path="res://assets/ui/game_camera.gd" id="1_ntafj"]
 
-[node name="CameraRoot" type="Node3D"]
+[node name="GameCamera" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.885, 6.42)
 script = ExtResource("1_ntafj")
 

@@ -1,158 +1,45 @@
-[gd_scene load_steps=9 format=3 uid="uid://ca7tcyr2wfnbc"]
+[gd_scene load_steps=10 format=3 uid="uid://chj4u0exdedyv"]
 
-[ext_resource type="Script" path="res://assets/player/player.gd" id="1_rf361"]
-[ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="4_euio8"]
-[ext_resource type="PackedScene" uid="uid://d0g8tp0rvaspf" path="res://assets/mech/mech_rigged_legs.tscn" id="5_4mlh3"]
-[ext_resource type="PackedScene" uid="uid://cw0g6oqxn7baa" path="res://assets/mech/legs.tscn" id="6_knpsn"]
+[ext_resource type="PackedScene" uid="uid://gnhl5ph4405a" path="res://assets/mech/mech_constructor.tscn" id="1_odonj"]
+[ext_resource type="PackedScene" uid="uid://dov4e8rgbsxfn" path="res://assets/mech/weapons/machine_gun.tscn" id="3_idmka"]
+[ext_resource type="PackedScene" uid="uid://db7u5ws0asu74" path="res://assets/mech/weapons/rocket.tscn" id="4_ste2j"]
+[ext_resource type="Script" path="res://assets/mech/components/mech_rotation_component.gd" id="7_775k2"]
 [ext_resource type="Script" path="res://assets/mech/components/movement_component.gd" id="7_biqow"]
 [ext_resource type="Script" path="res://assets/mech/components/user_input_component.gd" id="8_1plms"]
+[ext_resource type="Script" path="res://assets/mech/components/mech_shoot_component.gd" id="8_gf882"]
+[ext_resource type="PackedScene" uid="uid://diy22r35a670q" path="res://assets/ui/game_camera.tscn" id="9_grv66"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
-radius = 1.93681
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ujx3"]
+radius = 0.878632
+height = 4.93799
 
-[sub_resource type="GDScript" id="GDScript_ldbog"]
-script/source = "extends Node3D
-class_name Mech
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.35309, 0.313896, 0)
 
-# Weapons reload time in seconds.
-@export_range(0.01, 5) var reload_time_sec: float = 0.2
+[node name="MechConstructor" parent="." instance=ExtResource("1_odonj")]
+weapons = Array[PackedScene]([ExtResource("3_idmka"), ExtResource("4_ste2j"), ExtResource("4_ste2j"), ExtResource("4_ste2j")])
 
-# Is mech ready to fire.
-var reloaded: bool = true
-
-# Model parts for faster loading.
-@export var _mech_body: Node3D
-@export var _mech_legs: Node3D
-@export var _mech_weapon_left: Node3D
-@export var _mech_weapon_right: Node3D
-
-# Needs for shooting mechanic
-@export var _bullet_spawner_l: Node3D
-@export var _bullet_spawner_r: Node3D
-@export var _bullet_node = preload(\"res://assets/mech/bullet/bullet.tscn\")
-
-# Current bullet spawner. Changes when a new bullet spawned.
-@export var _bullet_spawner_to_shoot: Node3D
-
-func _ready():
-	if !_mech_body:
-		_mech_body = $body
-
-	if !_mech_legs:
-		_mech_legs = $legs
-
-	if !_mech_weapon_left:
-		_mech_weapon_left = $body/weapon_l
-		
-	if !_mech_weapon_right:
-		_mech_weapon_right = $body/weapon_r
-
-	if !_bullet_spawner_l:
-		_bullet_spawner_l = $body/weapon_l/bullet_spawn_l
-		
-	if !_bullet_spawner_r:
-		_bullet_spawner_r = $body/weapon_r/bullet_spawn_r
-		
-	if !_bullet_spawner_to_shoot:
-		_bullet_spawner_to_shoot = _bullet_spawner_l
-
-# Spawns bullet and fires it to weapons direction.
-func spawn_bullet() -> void:
-	if !reloaded:
-		return
-	
-	reloaded = false
-	if _bullet_spawner_l == null or _bullet_spawner_r == null:
-		print_debug('Bullet spawners not found')
-		return
-	
-	var bullet = _bullet_node.instantiate()
-	get_node(\"/root/World\").add_child(bullet)
-	
-	bullet.position = _bullet_spawner_to_shoot.global_position
-	$reload_timer.start(reload_time_sec)
-	
-	if _bullet_spawner_to_shoot == _bullet_spawner_l:
-		_bullet_spawner_to_shoot = _bullet_spawner_r
-		bullet.rotation.y = _mech_weapon_left.global_rotation.y + PI / 2
-	else: 
-		_bullet_spawner_to_shoot = _bullet_spawner_l
-		bullet.rotation.y = _mech_weapon_left.global_rotation.y + PI / 2
-
-
-# Custom fmod to get non negative modulo with negative lhs.
-# TODO: move to common script file. 
-func _fmod(lhs: float, rhs: float) -> float:
-	return lhs - floor(lhs / rhs) * rhs
-
-
-# Reload weapons by timer.
-func _on_reload_timer_timeout():
-	reloaded = true
-"
-
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("_legs_model")]
-script = ExtResource("1_rf361")
-_legs_model = NodePath("legs")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-shape = SubResource("SphereShape3D_mj3nk")
-
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(0.0859966, 0.000669247, 0.000379981, -0.000380402, 5.26309e-05, 0.0859991, 0.000669007, -0.0859974, 5.55886e-05, 0, 5.85473, 0)
-layers = 4
-billboard = 1
-no_depth_test = true
-fixed_size = true
-texture = ExtResource("4_euio8")
-
-[node name="mech_rigged_legs" parent="." node_paths=PackedStringArray("_mech_weapon_left", "_mech_weapon_right", "_bullet_spawner_l", "_bullet_spawner_r", "_bullet_spawner_to_shoot") instance=ExtResource("5_4mlh3")]
-script = SubResource("GDScript_ldbog")
-_mech_weapon_left = NodePath("body/weapon_l")
-_mech_weapon_right = NodePath("body/weapon_r")
-_bullet_spawner_l = NodePath("body/weapon_l/bullet_spawn_l")
-_bullet_spawner_r = NodePath("body/weapon_r/bullet_spawn_r")
-_bullet_spawner_to_shoot = NodePath("body/weapon_l/bullet_spawn_l")
-
-[node name="Armature" parent="mech_rigged_legs/body" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.546298, 0)
-
-[node name="RLegFoot" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="0"]
-transform = Transform3D(0.115427, -0.0106363, 0.00545329, 0.0106363, 0.115556, 0.000250586, 0.00545329, -0.00025058, -0.115916, -0.00235654, -2.18629, 1.00224)
-
-[node name="RLegLeg" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="1"]
-transform = Transform3D(0.115927, 0.00522338, -0.000124217, -0.00522307, 0.115927, 0.000285904, -0.000136961, 0.000280025, -0.116043, -0.332767, -1.50184, 0.998114)
-
-[node name="RLegHip" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="2"]
-transform = Transform3D(0.116022, 0.0023206, -4.23045e-06, -0.0023206, 0.116022, -6.22173e-06, -4.10519e-06, -6.30508e-06, -0.116045, 0.0607971, 0.00536769, 0.998385)
-
-[node name="RLegConnect" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="3"]
-transform = Transform3D(0.116045, 0, 0, 0, 0.116045, 0, 0, 0, -0.116045, 0.0641504, 0.00585628, 0.574686)
-
-[node name="LLegFoot" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="4"]
-transform = Transform3D(0.116045, 0, 0, 0, 0.116045, 0, 0, 0, 0.116045, 0.167885, -2.22812, -1.05372)
-
-[node name="LLegLeg" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="5"]
-transform = Transform3D(0.115932, -0.00495963, 0.00122139, 0.00498508, 0.115911, -0.00250384, -0.00111295, 0.00255388, 0.116011, -0.224339, -1.51497, -1.01687)
-
-[node name="LLegHip" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="6"]
-transform = Transform3D(0.115864, -0.00646796, -8.82484e-05, 0.00646785, 0.115864, -0.00014071, 9.59523e-05, 0.00013558, 0.116045, 0.0468993, 0.0133241, -0.997798)
-
-[node name="LLegConnect" parent="mech_rigged_legs/body/Armature/Skeleton3D" index="7"]
-transform = Transform3D(0.116045, -2.32831e-10, 9.09162e-13, -2.32831e-10, 0.116045, 1.5099e-14, 9.09162e-13, 1.5099e-14, 0.116045, 0.051043, 0.00996536, -0.574149)
-
-[node name="legs" parent="." instance=ExtResource("6_knpsn")]
+[node name="UserInputComponent" type="Node" parent="."]
+script = ExtResource("8_1plms")
 
 [node name="MovementComponent" type="Node" parent="." node_paths=PackedStringArray("_character_body", "_input_component")]
 script = ExtResource("7_biqow")
 _character_body = NodePath("..")
 _input_component = NodePath("../UserInputComponent")
-mech_speed = 5.0
 
-[node name="UserInputComponent" type="Node" parent="."]
-script = ExtResource("8_1plms")
+[node name="MechRotationComponent" type="Node" parent="." node_paths=PackedStringArray("_input_component", "_mech_constructor")]
+script = ExtResource("7_775k2")
+_input_component = NodePath("../UserInputComponent")
+_mech_constructor = NodePath("../MechConstructor")
 
-[connection signal="timeout" from="mech_rigged_legs/reload_timer" to="mech_rigged_legs" method="_on_reload_timer_timeout"]
+[node name="ShootComponent" type="Node" parent="." node_paths=PackedStringArray("_input_component", "_mech_constructor")]
+script = ExtResource("8_gf882")
+_input_component = NodePath("../UserInputComponent")
+_mech_constructor = NodePath("../MechConstructor")
+reload_time_sec = 0.01
 
-[editable path="mech_rigged_legs"]
+[node name="GameCamera" parent="." instance=ExtResource("9_grv66")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.47685, 0)
+shape = SubResource("CapsuleShape3D_5ujx3")
