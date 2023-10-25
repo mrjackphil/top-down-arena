@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://be2nuup11w1oc"]
+[gd_scene load_steps=6 format=3 uid="uid://be2nuup11w1oc"]
 
 [ext_resource type="PackedScene" uid="uid://b2hvqqdw3h1yc" path="res://assets/mech/mech_model.tscn" id="1_y3vck"]
+[ext_resource type="Texture2D" uid="uid://bic0xrm6tvha2" path="res://assets/ui/vintage-robot.svg" id="2_64pwe"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
 radius = 1.93681
@@ -21,7 +22,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("SphereShape3D_mj3nk")
 
 [node name="healthbar" type="Sprite3D" parent="."]
-layers = 2
 modulate = Color(1, 0, 0, 1)
 pixel_size = 0.0291
 billboard = 1
@@ -31,3 +31,8 @@ no_depth_test = true
 fixed_size = true
 texture_filter = 0
 texture = SubResource("GradientTexture1D_tofs7")
+
+[node name="MinimapMarker" type="Sprite3D" parent="."]
+layers = 4
+billboard = 1
+texture = ExtResource("2_64pwe")

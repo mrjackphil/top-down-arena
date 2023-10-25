@@ -1,4 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8jjl2qnb5bn2"]
+[gd_scene load_steps=10 format=3 uid="uid://b8jjl2qnb5bn2"]
+
+[ext_resource type="Script" path="res://assets/ui/gui.gd" id="1_4vjyx"]
+[ext_resource type="Texture2D" uid="uid://b12tqifjr3vak" path="res://assets/ui/mask.png" id="1_ut4dl"]
+[ext_resource type="Shader" path="res://assets/ui/minimap_ripple.gdshader" id="2_2k2ar"]
+[ext_resource type="Texture2D" uid="uid://dre87t76rvocr" path="res://assets/ui/map_border.png" id="2_vp3wb"]
+[ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="5_nyxjq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gttt4"]
 bg_color = Color(0.815686, 0.152941, 0.282353, 1)
@@ -6,13 +12,23 @@ bg_color = Color(0.815686, 0.152941, 0.282353, 1)
 [sub_resource type="Theme" id="Theme_r2nvc"]
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_gttt4")
 
-[node name="ui" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0r3f0"]
+shader = ExtResource("2_2k2ar")
+shader_parameter/color_signal = Color(1, 1, 1, 1)
+shader_parameter/size = 0.2
+shader_parameter/zoom = 8.0
+shader_parameter/speed = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_juok4"]
+shader = ExtResource("2_2k2ar")
+shader_parameter/color_signal = Color(0.176471, 0.698039, 0.74902, 1)
+shader_parameter/size = 0.04
+shader_parameter/zoom = 1.0
+shader_parameter/speed = 1.0
+
+[node name="ui" type="CanvasLayer" node_paths=PackedStringArray("minimap_camera")]
+script = ExtResource("1_4vjyx")
+minimap_camera = NodePath("CameraMask/SubViewportContainer/SubViewport/Camera3D")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 offset_left = 8.0
@@ -24,22 +40,41 @@ value = 100.0
 rounded = true
 show_percentage = false
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-offset_left = 891.0
-offset_top = 6.0
-offset_right = 1141.0
-offset_bottom = 256.0
+[node name="CameraMask" type="Sprite2D" parent="."]
+modulate = Color(0.188235, 1, 1, 1)
+clip_children = 2
+material = SubResource("ShaderMaterial_0r3f0")
+position = Vector2(1017, 130)
+scale = Vector2(0.962025, 0.962025)
+texture = ExtResource("1_ut4dl")
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CameraMask"]
+offset_left = -126.0
+offset_top = -124.0
+offset_right = 124.0
+offset_bottom = 126.0
+
+[node name="SubViewport" type="SubViewport" parent="CameraMask/SubViewportContainer"]
 handle_input_locally = false
 gui_disable_input = true
 gui_embed_subwindows = true
 size = Vector2i(250, 250)
 render_target_update_mode = 4
 
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 691, -3.02046e-05)
-cull_mask = 1048573
+[node name="Camera3D" type="Camera3D" parent="CameraMask/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1000, 0)
+top_level = true
+cull_mask = 1048572
+doppler_tracking = 1
 projection = 1
-current = true
-size = 1000.0
+size = 50.0
+
+[node name="Border" type="Sprite2D" parent="."]
+position = Vector2(1017, 130)
+texture = ExtResource("2_vp3wb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_juok4")
+position = Vector2(1016, 131)
+scale = Vector2(1.84375, 1.84375)
+texture = ExtResource("5_nyxjq")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://chj4u0exdedyv"]
+[gd_scene load_steps=11 format=3 uid="uid://chj4u0exdedyv"]
 
 [ext_resource type="PackedScene" uid="uid://gnhl5ph4405a" path="res://assets/mech/mech_constructor.tscn" id="1_odonj"]
 [ext_resource type="PackedScene" uid="uid://dov4e8rgbsxfn" path="res://assets/mech/weapons/machine_gun.tscn" id="3_idmka"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://assets/mech/components/movement_component.gd" id="7_biqow"]
 [ext_resource type="Script" path="res://assets/mech/components/user_input_component.gd" id="8_1plms"]
 [ext_resource type="Script" path="res://assets/mech/components/mech_shoot_component.gd" id="8_gf882"]
+[ext_resource type="Texture2D" uid="uid://b12tqifjr3vak" path="res://assets/ui/mask.png" id="9_fnqc7"]
 [ext_resource type="PackedScene" uid="uid://diy22r35a670q" path="res://assets/ui/game_camera.tscn" id="9_grv66"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ujx3"]
@@ -42,3 +43,8 @@ reload_time_sec = 0.01
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.47685, 0)
 shape = SubResource("CapsuleShape3D_5ujx3")
+
+[node name="MinimapMarker" type="Sprite3D" parent="."]
+layers = 4
+billboard = 1
+texture = ExtResource("9_fnqc7")

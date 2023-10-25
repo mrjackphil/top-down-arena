@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4cyvi0d1yvsf"]
+
+[ext_resource type="Script" path="res://assets/ui/main_menu.gd" id="1_5ago5"]
+[ext_resource type="PackedScene" uid="uid://cx01pe06df2px" path="res://Test_Scene.tscn" id="2_0kkko"]
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("start_game_btn", "options_btn", "exit_game_btn")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5ago5")
+start_game_btn = NodePath("MarginContainer/CenterContainer/VBoxContainer/StartGame")
+options_btn = NodePath("MarginContainer/CenterContainer/VBoxContainer/Options")
+exit_game_btn = NodePath("MarginContainer/CenterContainer/VBoxContainer/ExitGame")
+scenes = Array[PackedScene]([ExtResource("2_0kkko")])
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="StartGame" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="Options" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="ExitGame" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit"

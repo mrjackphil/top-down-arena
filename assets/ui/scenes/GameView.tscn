@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://btbaxki7m78xu"]
+
+[node name="GameView" type="Node2D"]

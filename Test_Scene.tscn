@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cx01pe06df2px"]
+[gd_scene load_steps=6 format=3 uid="uid://cx01pe06df2px"]
 
 [ext_resource type="PackedScene" uid="uid://be2nuup11w1oc" path="res://assets/npc/npc.tscn" id="1_kaobf"]
 [ext_resource type="PackedScene" uid="uid://chj4u0exdedyv" path="res://assets/player/player.tscn" id="2_fsfd4"]
 [ext_resource type="Script" path="res://assets/npc/enemy.gd" id="2_vk2re"]
+[ext_resource type="PackedScene" uid="uid://b8jjl2qnb5bn2" path="res://assets/ui/gui.tscn" id="4_n55oo"]
 
 [sub_resource type="Environment" id="Environment_5eedn"]
 glow_enabled = true
@@ -21,3 +22,6 @@ transform = Transform3D(-0.369304, 0.679382, 0.634078, 0.271425, -0.573705, 0.77
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_fsfd4")]
+
+[node name="ui" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_n55oo")]
+player = NodePath("../Player")
