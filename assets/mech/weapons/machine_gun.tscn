@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dov4e8rgbsxfn"]
+[gd_scene load_steps=4 format=3 uid="uid://dov4e8rgbsxfn"]
 
 [ext_resource type="Script" path="res://assets/mech/weapon.gd" id="1_kqur7"]
-[ext_resource type="Texture2D" uid="uid://dygavdxuu5sxo" path="res://icon.svg" id="2_6jdvt"]
 [ext_resource type="PackedScene" uid="uid://bsnx3642camwl" path="res://assets/mech/bullet/bullet.tscn" id="2_awq7a"]
 [ext_resource type="PackedScene" uid="uid://bt7dgp38f2fe0" path="res://assets/mech/models/arm_power.glb" id="2_lnka1"]
 
@@ -12,9 +11,13 @@ bullet = ExtResource("2_awq7a")
 
 [node name="arm_power2" parent="." instance=ExtResource("2_lnka1")]
 
-[node name="Decal" type="Decal" parent="."]
-transform = Transform3D(-1.77247e-08, 0, 0.405494, 0, 1, 0, -0.405494, 0, -1.77247e-08, 0.550583, -0.600311, 0.00946525)
-texture_albedo = ExtResource("2_6jdvt")
-
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.32383, -0.233031, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.01895, -0.290099, 0)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1, -4.37114e-08, 0)
+radius = 0.234688
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1.31134e-07, -1, 0, 1, 1.31134e-07, 0, 0, 0, 1, 2, -0.28475, 0)
+radius = 0.0587178
