@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b8jjl2qnb5bn2"]
+[gd_scene load_steps=8 format=3 uid="uid://b8jjl2qnb5bn2"]
 
 [ext_resource type="Script" path="res://assets/ui/gui.gd" id="1_4vjyx"]
 [ext_resource type="Texture2D" uid="uid://b12tqifjr3vak" path="res://assets/ui/mask.png" id="1_ut4dl"]
@@ -10,13 +10,6 @@ bg_color = Color(0.815686, 0.152941, 0.282353, 1)
 
 [sub_resource type="Theme" id="Theme_r2nvc"]
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_gttt4")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ophq0"]
-shader = ExtResource("2_2k2ar")
-shader_parameter/color_signal = Color(1, 1, 1, 1)
-shader_parameter/size = 0.2
-shader_parameter/zoom = 8.0
-shader_parameter/speed = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_juok4"]
 shader = ExtResource("2_2k2ar")
@@ -62,8 +55,8 @@ rounded = true
 show_percentage = false
 
 [node name="Minimap" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+modulate = Color(0.0862745, 1, 1, 1)
 clip_children = 2
-material = SubResource("ShaderMaterial_ophq0")
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 8
