@@ -12,7 +12,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	translate(Vector3(1, 0, 0))
+	translate(Vector3(delta * 60, 0, 0))
 	
 	if timer < 0:
 		queue_free()
@@ -22,4 +22,5 @@ func _physics_process(delta):
 func _on_body_entered(body) -> void:
 	if (body && body.has_method("on_hurt")):
 		body.on_hurt()
-		queue_free()
+
+	queue_free()

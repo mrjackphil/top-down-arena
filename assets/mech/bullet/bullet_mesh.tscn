@@ -11,11 +11,11 @@ shader = ExtResource("2_qwlyt")
 shader_parameter/Glow_Power = 10.0
 shader_parameter/Lightness_Difference = 10.0
 shader_parameter/Sun_Color = Color(0.968627, 0.87451, 0.537255, 1)
-shader_parameter/blendSharpness = 2.0
-shader_parameter/emission_noise = SubResource("NoiseTexture2D_gre2p")
+shader_parameter/waveSpeed = 1.0
 shader_parameter/fresnel = 2.0
 shader_parameter/scale = 2.0
-shader_parameter/waveSpeed = 1.0
+shader_parameter/blendSharpness = 2.0
+shader_parameter/emission_noise = SubResource("NoiseTexture2D_gre2p")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_7i40r"]
 _surfaces = [{

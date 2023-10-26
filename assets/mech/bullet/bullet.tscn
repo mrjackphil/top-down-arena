@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u2gnp"]
 radius = 0.110617
-height = 0.944207
+height = 1.57915
 
 [node name="bullet" type="Area3D"]
 script = ExtResource("2_lqccc")
