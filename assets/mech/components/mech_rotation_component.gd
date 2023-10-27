@@ -28,35 +28,16 @@ var _body_rotation_speed_rad: float = deg_to_rad(body_rotation_speed)
 # Max rotation rad for weapons. Should be less than body rotation speed.
 var _weapons_rotation_speed_rad: float = deg_to_rad(weapons_rotation_speed)
 
-func _process(_delta):
-	var body_direction = Vector2.ZERO
-	var legs_direction = Vector2.ZERO
-
-	if _input_component:
-		var input_dir = _input_component.input_direction
-		legs_direction = (_mech_constructor.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-
-		var viewport = get_viewport()
-		var mouse_position = viewport.get_mouse_position()
-		body_direction = Vector3(mouse_position.y - viewport.size.y / 2, 0, mouse_position.x - viewport.size.x / 2).normalized()
-
-	if body_direction:
-		_update_body_direction(body_direction)
-
-	if legs_direction:
-		_update_legs_direction(legs_direction)
-
-func _update_legs_direction(dir: Vector3):
+func update_legs_direction(dir: Vector3):
 	_mech_legs.rotation.y = lerp_angle(atan2(-dir.z, dir.x), _mech_legs.rotation.y, 0.9)
 
 # Changes body direction to dir vector.
-func _update_body_direction(dir: Vector3) -> void:
-	var new_angle = -atan2(dir.x, dir.z)
-	var diff = _fmod(_mech_body.rotation.y - new_angle + PI, TAU) - PI
-	if absf(diff) > _body_rotation_speed_rad:
-		new_angle = _mech_body.rotation.y - sign(diff) * _body_rotation_speed_rad
-	
-	_mech_body.rotation.y = lerp_angle(new_angle, _mech_body.rotation.y, 0.9)
+func update_body_direction(dir: Vector3) -> void:
+	if _mech_body.global_transform.origin.dot(dir) != 0:
+		_mech_body.look_at(dir)
+		_mech_body.rotate_object_local(Vector3(0, -1, 0), -PI / 2.0)
+	else:
+		_mech_body.set_rotation(dir)
 
 
 # Changes weapons direction to mouse.

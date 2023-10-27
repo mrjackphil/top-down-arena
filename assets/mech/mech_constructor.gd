@@ -34,7 +34,7 @@ func _update_weapons():
 	equipped_weapons = []
 
 	for i in equipped_base.weapon_placements.size():
-		if not weapons[i]:
+		if weapons.size() <= i or not weapons[i]:
 			continue
 
 		var weapon_instance: Weapon = weapons[i].instantiate() as Weapon

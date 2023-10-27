@@ -25,10 +25,13 @@ func _shoot():
 		return
 
 	if _active_weapon_index >= _mech_constructor.equipped_weapons.size():
+		if _mech_constructor.equipped_weapons.size() == 0:
+			return
+		
 		_active_weapon_index = 0
-
+	
 	_mech_constructor.equipped_weapons[_active_weapon_index].shoot()
-
+	
 	_active_weapon_index += 1
 		
 	_timer.start(reload_time_sec)

@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://chj4u0exdedyv"]
+[gd_scene load_steps=13 format=3 uid="uid://chj4u0exdedyv"]
 
 [ext_resource type="PackedScene" uid="uid://gnhl5ph4405a" path="res://assets/mech/mech_constructor.tscn" id="1_odonj"]
 [ext_resource type="PackedScene" uid="uid://dov4e8rgbsxfn" path="res://assets/mech/weapons/machine_gun.tscn" id="3_idmka"]
 [ext_resource type="PackedScene" uid="uid://db7u5ws0asu74" path="res://assets/mech/weapons/rocket.tscn" id="4_ste2j"]
+[ext_resource type="Script" path="res://assets/player/player_controller_component.gd" id="4_ymihu"]
 [ext_resource type="Script" path="res://assets/mech/components/mech_rotation_component.gd" id="7_775k2"]
 [ext_resource type="Script" path="res://assets/mech/components/movement_component.gd" id="7_biqow"]
 [ext_resource type="Script" path="res://assets/mech/components/user_input_component.gd" id="8_1plms"]
 [ext_resource type="Script" path="res://assets/mech/components/mech_shoot_component.gd" id="8_gf882"]
+[ext_resource type="Script" path="res://assets/fraction/fraction_component.gd" id="9_08e2f"]
 [ext_resource type="Texture2D" uid="uid://b12tqifjr3vak" path="res://assets/ui/mask.png" id="9_fnqc7"]
 [ext_resource type="PackedScene" uid="uid://diy22r35a670q" path="res://assets/ui/game_camera.tscn" id="9_grv66"]
 
@@ -18,6 +20,13 @@ height = 4.93799
 
 [node name="MechConstructor" parent="." instance=ExtResource("1_odonj")]
 weapons = Array[PackedScene]([ExtResource("3_idmka"), ExtResource("4_ste2j"), ExtResource("4_ste2j"), ExtResource("4_ste2j")])
+
+[node name="PlayerControllerComponent" type="Node" parent="." node_paths=PackedStringArray("_mech_rotation_component", "_user_input_component", "_mech_constructor", "_game_camera")]
+script = ExtResource("4_ymihu")
+_mech_rotation_component = NodePath("../MechRotationComponent")
+_user_input_component = NodePath("../UserInputComponent")
+_mech_constructor = NodePath("../MechConstructor")
+_game_camera = NodePath("../GameCamera")
 
 [node name="UserInputComponent" type="Node" parent="."]
 script = ExtResource("8_1plms")
@@ -37,6 +46,10 @@ script = ExtResource("8_gf882")
 _input_component = NodePath("../UserInputComponent")
 _mech_constructor = NodePath("../MechConstructor")
 reload_time_sec = 0.01
+
+[node name="FractionComponent" type="Node" parent="." node_paths=PackedStringArray("_target_object")]
+script = ExtResource("9_08e2f")
+_target_object = NodePath("..")
 
 [node name="GameCamera" parent="." instance=ExtResource("9_grv66")]
 
