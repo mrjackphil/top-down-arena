@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 MapGenerator="*res://assets/map/map_generator.gd"
 
+[filesystem]
+
+import/fbx/enabled=false
+
 [importer_defaults]
 
 scene={
