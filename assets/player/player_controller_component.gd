@@ -5,6 +5,14 @@ class_name PlayerControllerComponent
 @export var _user_input_component: UserInputComponent
 @export var _mech_constructor: MechConstructor
 @export var _game_camera: GameCamera
+@export var _health_component: HealthComponent
+
+func die():
+	GameManager.game_over()
+
+func _ready():
+	_health_component.died.connect(die)
+	get_parent().add_to_group("player")
 
 func _process(_delta: float):
 	_rotate()
