@@ -4,7 +4,7 @@ class_name UserInputComponent
 signal jump_pressed
 signal shoot_pressed
 
-var input_direction = Vector3.ZERO
+var input_direction: Vector2 = Vector2.ZERO
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_accept"):
