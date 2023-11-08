@@ -1,7 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://be2nuup11w1oc"]
+[gd_scene load_steps=13 format=3 uid="uid://be2nuup11w1oc"]
 
 [ext_resource type="PackedScene" uid="uid://gnhl5ph4405a" path="res://assets/mech/mech_constructor.tscn" id="1_5jhfu"]
-[ext_resource type="Texture2D" uid="uid://bic0xrm6tvha2" path="res://assets/ui/vintage-robot.svg" id="2_64pwe"]
+[ext_resource type="Script" path="res://assets/npc/enemy.gd" id="1_v1kwa"]
+[ext_resource type="PackedScene" uid="uid://bhx0ch2d72iq8" path="res://assets/ui/minimap_marker.tscn" id="3_0kdg8"]
+[ext_resource type="Script" path="res://assets/mech/components/health_component.gd" id="4_sbf2l"]
+[ext_resource type="Script" path="res://assets/mech/components/hitbox_component.gd" id="5_ndb2p"]
+[ext_resource type="Script" path="res://assets/mech/components/mech_shoot_component.gd" id="6_2ujiy"]
+[ext_resource type="Script" path="res://assets/mech/components/mech_rotation_component.gd" id="7_wyj1u"]
+[ext_resource type="Script" path="res://assets/mech/components/movement_component.gd" id="8_whtrs"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mj3nk"]
 radius = 1.93681
@@ -13,7 +19,17 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_y3pj4")
 width = 10
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_j2168"]
+size = Vector3(1, 4.99399, 2.42798)
+
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("_health_component", "_shoot_component", "_move_component", "_rotate_component", "_mech_constructor", "_character_body")]
+script = ExtResource("1_v1kwa")
+_health_component = NodePath("HealthComponent")
+_shoot_component = NodePath("ShootComponent")
+_move_component = NodePath("MovementComponent")
+_rotate_component = NodePath("MechRotationComponent")
+_mech_constructor = NodePath("MechConstructor")
+_character_body = NodePath(".")
 
 [node name="MechConstructor" parent="." instance=ExtResource("1_5jhfu")]
 
@@ -32,7 +48,30 @@ fixed_size = true
 texture_filter = 0
 texture = SubResource("GradientTexture1D_tofs7")
 
-[node name="MinimapMarker" type="Sprite3D" parent="."]
-layers = 4
-billboard = 1
-texture = ExtResource("2_64pwe")
+[node name="MinimapMarker" parent="." instance=ExtResource("3_0kdg8")]
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("4_sbf2l")
+
+[node name="HitboxComponent" type="Area3D" parent="." node_paths=PackedStringArray("_health_components")]
+collision_mask = 2
+script = ExtResource("5_ndb2p")
+_health_components = [NodePath("../HealthComponent")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48465, 0)
+shape = SubResource("BoxShape3D_j2168")
+
+[node name="ShootComponent" type="Node" parent="." node_paths=PackedStringArray("_mech_constructor")]
+script = ExtResource("6_2ujiy")
+_mech_constructor = NodePath("../MechConstructor")
+reload_time_sec = 0.01
+
+[node name="MechRotationComponent" type="Node" parent="." node_paths=PackedStringArray("_mech_constructor")]
+script = ExtResource("7_wyj1u")
+_mech_constructor = NodePath("../MechConstructor")
+
+[node name="MovementComponent" type="Node" parent="." node_paths=PackedStringArray("_character_body")]
+script = ExtResource("8_whtrs")
+_character_body = NodePath("..")
+mech_speed = 5.0

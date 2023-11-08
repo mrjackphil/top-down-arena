@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://chj4u0exdedyv"]
+[gd_scene load_steps=16 format=3 uid="uid://chj4u0exdedyv"]
 
 [ext_resource type="PackedScene" uid="uid://gnhl5ph4405a" path="res://assets/mech/mech_constructor.tscn" id="1_odonj"]
 [ext_resource type="PackedScene" uid="uid://dov4e8rgbsxfn" path="res://assets/mech/weapons/machine_gun.tscn" id="3_idmka"]
@@ -11,22 +11,28 @@
 [ext_resource type="Script" path="res://assets/fraction/fraction_component.gd" id="9_08e2f"]
 [ext_resource type="Texture2D" uid="uid://b12tqifjr3vak" path="res://assets/ui/mask.png" id="9_fnqc7"]
 [ext_resource type="PackedScene" uid="uid://diy22r35a670q" path="res://assets/ui/game_camera.tscn" id="9_grv66"]
+[ext_resource type="Script" path="res://assets/mech/components/health_component.gd" id="12_uqq11"]
+[ext_resource type="Script" path="res://assets/mech/components/hitbox_component.gd" id="13_fojp1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ujx3"]
 radius = 0.878632
 height = 4.93799
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mqm57"]
+size = Vector3(1, 4.94276, 2.03741)
 
 [node name="Player" type="CharacterBody3D"]
 
 [node name="MechConstructor" parent="." instance=ExtResource("1_odonj")]
 weapons = Array[PackedScene]([ExtResource("3_idmka"), ExtResource("4_ste2j"), ExtResource("4_ste2j"), ExtResource("4_ste2j")])
 
-[node name="PlayerControllerComponent" type="Node" parent="." node_paths=PackedStringArray("_mech_rotation_component", "_user_input_component", "_mech_constructor", "_game_camera")]
+[node name="PlayerControllerComponent" type="Node" parent="." node_paths=PackedStringArray("_mech_rotation_component", "_user_input_component", "_mech_constructor", "_game_camera", "_health_component")]
 script = ExtResource("4_ymihu")
 _mech_rotation_component = NodePath("../MechRotationComponent")
 _user_input_component = NodePath("../UserInputComponent")
 _mech_constructor = NodePath("../MechConstructor")
 _game_camera = NodePath("../GameCamera")
+_health_component = NodePath("../HealthComponent")
 
 [node name="UserInputComponent" type="Node" parent="."]
 script = ExtResource("8_1plms")
@@ -61,3 +67,15 @@ shape = SubResource("CapsuleShape3D_5ujx3")
 layers = 4
 billboard = 1
 texture = ExtResource("9_fnqc7")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("12_uqq11")
+
+[node name="HitboxComponent" type="Area3D" parent="." node_paths=PackedStringArray("_health_components")]
+collision_mask = 4
+script = ExtResource("13_fojp1")
+_health_components = [NodePath("../HealthComponent")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0366898, 2.47693, 0)
+shape = SubResource("BoxShape3D_mqm57")
