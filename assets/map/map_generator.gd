@@ -8,17 +8,21 @@ extends Node
 const MAP_HEIGHT = 5
 const MAP_WIDTH  = 5
 
-const CELL_HEIGHT = 5
+const CELL_LENGTH = 5
 const CELL_WIDTH  = 5  
+const CELL_MAX_HEIGHT = 0
 
 const TILE_SIZE   = 20
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	generate_map()
 	
 func generate_map():
-	root_node = get_node("/root")
+	root_node = Node3D.new()
+	get_node("/root").add_child.call_deferred(root_node)
 	
 	if root_node == null:
 		return
@@ -28,9 +32,9 @@ func generate_map():
 			generate_cell(x, y) 
 	
 func generate_cell(cell_x: int, cell_y: int):
-	for y in range(0, CELL_HEIGHT):
+	for y in range(0, CELL_LENGTH):
 		for x in range(0, CELL_WIDTH):
-			var tile_x = cell_x * TILE_SIZE * CELL_HEIGHT + x * TILE_SIZE
+			var tile_x = cell_x * TILE_SIZE * CELL_LENGTH + x * TILE_SIZE
 			var tile_y = cell_y * TILE_SIZE * CELL_WIDTH + y * TILE_SIZE
 			generate_tile(tile_x, tile_y)
 	
@@ -43,6 +47,6 @@ func generate_tile(x: int, y: int):
 	cell_instance.position.z = y
 	
 	if (x != 0 or y != 0) and randi_range(1, 6) > 5:
-		cell_instance.size.y = randi_range(0, 10)
+		cell_instance.size.y = randi_range(0, CELL_MAX_HEIGHT)
 	
 	root_node.call_deferred("add_child", cell_instance)
