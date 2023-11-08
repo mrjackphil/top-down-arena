@@ -5,7 +5,9 @@ class_name MovementComponent
 @export var _input_component: UserInputComponent
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var _gravity: Variant = ProjectSettings.get_setting("physics/3d/default_gravity")
+var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+var move_dir: Vector2 = Vector2.ZERO
 
 # Mech movement speed.
 @export_range(5, 50, 0.2) var mech_speed: float = 10.0
@@ -32,10 +34,12 @@ func _physics_process(delta):
 	if not _character_body.is_on_floor():
 		_character_body.velocity.y -= _gravity * delta
 		
-	var input_dir = Vector3.ZERO
+	var input_dir: Vector2 = Vector2.ZERO
 
 	if _input_component && _input_component.input_direction:
 		input_dir = _input_component.input_direction
+	else:
+		input_dir = move_dir
 	
 	var direction = (_character_body.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
