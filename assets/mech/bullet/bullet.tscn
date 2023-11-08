@@ -9,6 +9,7 @@ radius = 0.110617
 height = 1.57915
 
 [node name="bullet" type="Area3D"]
+collision_layer = 0
 script = ExtResource("2_lqccc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -24,5 +25,3 @@ layers = 4
 billboard = 1
 no_depth_test = true
 texture = ExtResource("3_egn40")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

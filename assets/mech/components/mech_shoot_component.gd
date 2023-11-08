@@ -14,13 +14,13 @@ var is_reloading = false
 
 func _ready():
 	if _input_component:
-		_input_component.connect(_input_component.shoot_pressed.get_name(), _shoot)
+		_input_component.connect(_input_component.shoot_pressed.get_name(), shoot)
 
 	_timer.one_shot = true
 	_timer.timeout.connect(func (): is_reloading = false)
 	add_child(_timer)
 
-func _shoot():
+func shoot(is_enemy_shooting: bool = false):
 	if is_reloading:
 		return
 
@@ -30,7 +30,7 @@ func _shoot():
 		
 		_active_weapon_index = 0
 	
-	_mech_constructor.equipped_weapons[_active_weapon_index].shoot()
+	_mech_constructor.equipped_weapons[_active_weapon_index].shoot(is_enemy_shooting)
 	
 	_active_weapon_index += 1
 		
