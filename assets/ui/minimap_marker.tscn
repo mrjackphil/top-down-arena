@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhx0ch2d72iq8"]
+
+[ext_resource type="Texture2D" uid="uid://bic0xrm6tvha2" path="res://assets/ui/vintage-robot.svg" id="1_kfnw4"]
+
+[node name="MinimapMarker" type="Sprite3D"]
+layers = 4
+billboard = 1
+texture = ExtResource("1_kfnw4")

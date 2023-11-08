@@ -18,12 +18,14 @@ shader_parameter/size = 0.04
 shader_parameter/zoom = 1.0
 shader_parameter/speed = 1.0
 
-[node name="ui" type="CanvasLayer" node_paths=PackedStringArray("minimap_camera")]
+[node name="ui" type="CanvasLayer" node_paths=PackedStringArray("minimap_camera", "progress_bar", "enemy_count")]
 script = ExtResource("1_4vjyx")
 minimap_camera = NodePath("MarginContainer/HBoxContainer/Minimap/Mask/SubViewportContainer/SubViewport/Camera3D")
+progress_bar = NodePath("MarginContainer/HBoxContainer/MarginContainer2/ProgressBar")
+enemy_count = NodePath("MarginContainer/MarginContainer/Label")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 20.0
@@ -33,26 +35,40 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="MarginContainer" type="CenterContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 3
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-ratio = 1.6666
-stretch_mode = 1
-alignment_horizontal = 0
+size_flags_vertical = 0
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/AspectRatioContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 1
 theme = SubResource("Theme_r2nvc")
 value = 100.0
 rounded = true
 show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Minimap" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
 modulate = Color(0.0862745, 1, 1, 1)
@@ -89,7 +105,7 @@ top_level = true
 cull_mask = 1048572
 doppler_tracking = 1
 projection = 1
-size = 50.0
+size = 250.0
 
 [node name="Border" type="TextureRect" parent="MarginContainer/HBoxContainer/Minimap"]
 custom_minimum_size = Vector2(245, 245)
