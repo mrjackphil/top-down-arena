@@ -1,4 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dgcd51drgrpnn"]
+[gd_scene load_steps=7 format=3 uid="uid://dgcd51drgrpnn"]
+
+[ext_resource type="Script" path="res://assets/effects/explosion/particle_explosion.gd" id="1_nny6h"]
 
 [sub_resource type="Gradient" id="Gradient_mydev"]
 offsets = PackedFloat32Array(0, 0.511029, 0.996324)
@@ -34,3 +36,4 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_cspfw")
 draw_pass_1 = SubResource("BoxMesh_refhv")
+script = ExtResource("1_nny6h")
